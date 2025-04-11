@@ -29,10 +29,10 @@ function ManageUser() {
     return (
         <div className="px-20 mt-2">
             <p className="text-3xl font-bold">Manage User</p>
-            <div className="mt-2"> 
+            <div className="mt-4"> 
                 <Button>Add User</Button>
             </div>
-            <div>
+            <div className="mt-4">
                 <MantineReactTable table={table} />
             </div>
         </div>
