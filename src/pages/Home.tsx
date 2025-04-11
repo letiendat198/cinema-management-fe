@@ -1,9 +1,20 @@
 import { Grid } from "@mantine/core"
 import { Carousel } from '@mantine/carousel';
 import MovieBox from "../components/MovieBox"
+import { useEffect, useState } from "react";
+import { Movie } from "../types/Movie";
+import { getAllMovies } from "../api/Movie";
 
 function Home() {
-    const col_span = 2;
+    const [movies, setMovies] = useState<Movie[]>([]);
+    const colSpan = 2;
+
+    useEffect(() => {
+        getAllMovies().then((data) => {
+            setMovies(data);
+        });
+    }, [])
+
     return (
         <div className="flex flex-col px-20">
             <div className="mt-2">
@@ -21,25 +32,11 @@ function Home() {
             <div className="mt-2">
                 <h1 className="text-left font-bold text-2xl">Hot Movies</h1>
                 <Grid>
-                    <Grid.Col span={{base: col_span}}>
-                        <MovieBox movieId="1" src="https://iguov8nhvyobj.vcdn.cloud/media/catalog/product/cache/3/image/c5f0a1eff4c394a251036189ccddaacd/p/a/payoff_poster_ngt_master_sneak-2_1_.jpg"
-                                title="Nhà Gia Tiên"></MovieBox>
-                    </Grid.Col>
-                    <Grid.Col span={{base: col_span}}>
-                        <MovieBox movieId="2" src="https://chieuphimquocgia.com.vn/_next/image?url=https%3A%2F%2Fapi.chieuphimquocgia.com.vn%2FContent%2FImages%2F0018386_0.jpg&w=256&q=75"
-                                title="Flow"></MovieBox>
-                    </Grid.Col>
-                    <Grid.Col span={{base: col_span}}>
-                        <MovieBox movieId="3" src="https://chieuphimquocgia.com.vn/_next/image?url=https%3A%2F%2Fapi.chieuphimquocgia.com.vn%2FContent%2FImages%2F0017972_0.jpg&w=256&q=75"
-                                title="Snow white"></MovieBox>
-                    </Grid.Col>
-                    <Grid.Col span={{base: col_span}}>
-                        <MovieBox movieId="4" src="https://chieuphimquocgia.com.vn/_next/image?url=https%3A%2F%2Fapi.chieuphimquocgia.com.vn%2FContent%2FImages%2F0018189_0.jpg&w=256&q=75"
-                                title="Novocaine"></MovieBox>
-                    </Grid.Col>
-                    <Grid.Col span={{base: col_span}}>
-                        
-                    </Grid.Col>
+                    {movies.map((movie, index) => (
+                        <Grid.Col key={index} span={{base: colSpan}}>
+                            <MovieBox movie={movie}></MovieBox>
+                        </Grid.Col>    
+                    ))}
                 </Grid>    
             </div>
         </div>

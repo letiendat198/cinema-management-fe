@@ -1,0 +1,15 @@
+export interface Movie {
+    _id: string,
+    title: string,
+    genre: string,
+    year: number,
+    rating: number,
+    img: string,
+    like: number,
+    view: number,
+    description: string,
+    language: [string],
+    length: number,
+    director: string,
+    moviestars: [string],
+}
