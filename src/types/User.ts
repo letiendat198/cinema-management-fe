@@ -1,7 +1,9 @@
 export interface User {
-    username: String,
-    password: String,
-    role: String,
+    _id: string,
+    username: string,
+    email: string,
+    password: string,
+    role: string,
     history: any,
     rank: any,
     watchHistory: any

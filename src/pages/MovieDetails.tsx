@@ -2,7 +2,7 @@ import { Button, Grid } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
 import { Movie } from "../types/Movie";
-import { getMovieById } from "../api/Movie";
+import { getMovieById } from "../api/MovieAPI";
 
 function MovieDetails() {
     const params = useParams();

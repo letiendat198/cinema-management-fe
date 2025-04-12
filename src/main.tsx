@@ -3,15 +3,17 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Route, Routes } from "react-router";
 import { createTheme, MantineProvider } from '@mantine/core';
 import './index.css'
+import '@mantine/core/styles.css';
 import '@mantine/carousel/styles.css';
-import '@mantine/core/styles.css'; //import Mantine V7 styles needed by MRT
+import '@mantine/notifications/styles.css';
 import '@mantine/dates/styles.css'; //if using mantine date picker features
-import 'mantine-react-table/styles.css'; //import MRT styles
+import 'mantine-datatable/styles.css';
 import App from './App.tsx'
 import Login from './pages/Login.tsx';
 import MovieDetails from './pages/MovieDetails.tsx';
 import Home from './pages/Home.tsx';
-import ManageUser from './pages/manage/ManageUser.tsx';
+import ManageUser from './pages/manage/manage-user/ManageUser.tsx';
+import { Notifications } from '@mantine/notifications';
 
 const theme = createTheme({
     primaryColor: 'blue',
@@ -21,6 +23,7 @@ const theme = createTheme({
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <MantineProvider theme={theme}>
+      <Notifications position='top-right' zIndex={1000} autoClose={3000} />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />}>
@@ -31,7 +34,6 @@ createRoot(document.getElementById('root')!).render(
               <Route path="/manage/user" element={<ManageUser />}/>
             </Route>
           </Route>
-          
         </Routes>
       </BrowserRouter>  
     </MantineProvider>

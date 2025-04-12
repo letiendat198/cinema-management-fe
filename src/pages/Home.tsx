@@ -3,7 +3,7 @@ import { Carousel } from '@mantine/carousel';
 import MovieBox from "../components/MovieBox"
 import { useEffect, useState } from "react";
 import { Movie } from "../types/Movie";
-import { getAllMovies } from "../api/Movie";
+import { getAllMovies } from "../api/MovieAPI";
 
 function Home() {
     const [movies, setMovies] = useState<Movie[]>([]);
