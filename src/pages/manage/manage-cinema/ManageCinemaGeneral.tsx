@@ -33,7 +33,7 @@ function ManageCinemaGeneral() {
                     <ManageCinema data={cinemaData} refreshToggle={refreshToggle} />
                 </Tabs.Panel>
                 <Tabs.Panel value="room">
-                    <ManageRoom cinemaData={cinemaData} refreshToggle={refreshToggle} />
+                    <ManageRoom cinemaData={cinemaData} />
                 </Tabs.Panel>
                 <Tabs.Panel value="seat">
                     <ManageSeat />

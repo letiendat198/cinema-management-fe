@@ -11,7 +11,7 @@ import { Cinema } from "../../../types/Cinema";
 
 interface Props {
     cinemaData: Cinema[] | undefined,
-    refreshToggle: () => void
+    // refreshToggle: () => void
 }
 
 function ManageRoom(props: Props) {
@@ -21,6 +21,7 @@ function ManageRoom(props: Props) {
     const [addOpened, {open: addOpen, close: addClose}] = useDisclosure(false);
     const [editOpened, {open: editOpen, close: editClose}] = useDisclosure(false);
     const [deleteOpened, {open: deleteOpen, close: deleteClose}] = useDisclosure(false);
+    const [refresh, refreshToggle] = useToggle();
     const selectedRoom = useRef<Room>(undefined);
 
     const deleteCallback = () => {
@@ -31,7 +32,7 @@ function ManageRoom(props: Props) {
                     title: 'Delete room',
                     message: message,
                 });
-                props.refreshToggle();
+                refreshToggle();
             })
     }
 
@@ -71,7 +72,8 @@ function ManageRoom(props: Props) {
             console.log("Getting room for cinema id", selectedCinemaId);
             getRoomsByCinemaId(selectedCinemaId).then(data => setData(data));    
         } 
-    }, [selectedCinemaId])
+        else setData([]);
+    }, [selectedCinemaId, refresh])
 
     return (
         <div className="mt-4">
@@ -103,13 +105,13 @@ function ManageRoom(props: Props) {
             <Modal opened={addOpened} onClose={addClose} title='Add Room'>
                 <RoomForm cinemaId={selectedCinemaId} onSubmit={() => {
                     addClose(),
-                    props.refreshToggle()
+                    refreshToggle()
                 }} />
             </Modal>
             <Modal opened={editOpened} onClose={editClose} title='Edit Room'>
                 <RoomForm edit data={selectedRoom.current} onSubmit={() => {
                     editClose();
-                    props.refreshToggle();
+                    refreshToggle();
                 }} />
             </Modal>
             <Modal opened={deleteOpened} onClose={deleteClose} title='Delete Room' >
