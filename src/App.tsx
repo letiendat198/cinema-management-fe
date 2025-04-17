@@ -11,7 +11,9 @@ function App() {
           <Header/>
         </AppShell.Header>
         <AppShell.Main>
-          <Outlet/>
+          <div className='px-20 mt-2'>
+            <Outlet />  
+          </div>
         </AppShell.Main>
       </AppShell>
   )

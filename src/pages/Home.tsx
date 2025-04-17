@@ -16,8 +16,8 @@ function Home() {
     }, [])
 
     return (
-        <div className="flex flex-col px-20">
-            <div className="mt-2">
+        <div className="flex flex-col">
+            <div>
                 <Carousel withIndicators height={400}>
                     <Carousel.Slide>
                         <img className="object-fill" style={{height: 400, width: '100vw'}}

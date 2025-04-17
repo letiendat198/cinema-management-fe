@@ -14,6 +14,8 @@ import MovieDetails from './pages/MovieDetails.tsx';
 import Home from './pages/Home.tsx';
 import ManageUser from './pages/manage/manage-user/ManageUser.tsx';
 import { Notifications } from '@mantine/notifications';
+import ManageMovie from './pages/manage/manage-movie/ManageMovie.tsx';
+import ManageCinemaGeneral from './pages/manage/manage-cinema/ManageCinemaGeneral.tsx';
 
 const theme = createTheme({
     primaryColor: 'blue',
@@ -32,6 +34,8 @@ createRoot(document.getElementById('root')!).render(
             <Route path="movie/:movieId" element={<MovieDetails/>}/>
             <Route path='/manage'>
               <Route path="/manage/user" element={<ManageUser />}/>
+              <Route path="/manage/movie" element={<ManageMovie />}/>
+              <Route path="/manage/cinema" element={<ManageCinemaGeneral />} />
             </Route>
           </Route>
         </Routes>

@@ -13,7 +13,7 @@ function MovieDetails() {
     }, [])
 
     return (
-        <div className="container px-20 mt-4">
+        <div>
             <div className="grid grid-cols-6">
                 <div>
                     <img className="object-cover w-40 h-60" src={movie?.img}/>

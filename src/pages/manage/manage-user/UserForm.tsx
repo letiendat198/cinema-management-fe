@@ -30,6 +30,7 @@ function UserForm(props: Props) {
                     title: 'Add new user',
                     message: message,
                 })
+                if (props.onSubmit) props.onSubmit();
             })    
         } 
         else {

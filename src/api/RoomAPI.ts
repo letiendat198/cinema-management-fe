@@ -1,21 +1,15 @@
-import { Movie } from "../types/Movie";
+import { Room } from "../types/Room";
 import { apiClient } from "./Client";
 
-const getAllMovies = async () => {
-    let res = await apiClient.get('/movie');
-    let data: Movie[] = res.data?.data;
+const getRoomsByCinemaId = async (id: string | undefined) => {
+    let res = await apiClient.get(`/room/${id}`);
+    let data: Room[] = res.data?.data;
     return data;
 }
 
-const getMovieById = async (id: string | undefined) => {
-    let res = await apiClient.get(`/movie/${id}`);
-    let data: Movie = res.data?.data;
-    return data;
-}
-
-const addMovie = async (movie: Movie) => {
+const addRoom = async (room: Room) => {
     try {
-        let res = await apiClient.post(`/movie`, movie);
+        let res = await apiClient.post(`/room`, room);
         return res.data?.message;
     }
     catch (error: any) {
@@ -28,9 +22,9 @@ const addMovie = async (movie: Movie) => {
     }
 }
 
-const updateMovie = async (id: string, movie: Movie) => {
+const updateRoom = async (id: string, room: Room) => {
     try {
-        let res = await apiClient.put(`/movie/${id}`, movie);
+        let res = await apiClient.put(`/room/${id}`, room);
         return res.data?.message;
     }
     catch (error: any) {
@@ -43,9 +37,9 @@ const updateMovie = async (id: string, movie: Movie) => {
     }
 }
 
-const deleteMovie = async (id: string) => {
+const deleteRoom = async (id: string) => {
     try {
-        let res = await apiClient.delete(`/movie/${id}`);
+        let res = await apiClient.delete(`/room/${id}`);
         return res.data?.message;
     }
     catch (error: any) {
@@ -58,4 +52,4 @@ const deleteMovie = async (id: string) => {
     }
 }
 
-export {getAllMovies, getMovieById, addMovie, updateMovie, deleteMovie}
+export {getRoomsByCinemaId, addRoom, updateRoom, deleteRoom}
