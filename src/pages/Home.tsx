@@ -30,7 +30,7 @@ function Home() {
                 </Carousel>    
             </div>
             <div className="mt-2">
-                <h1 className="text-left font-bold text-2xl">Hot Movies</h1>
+                <h1 className="text-left font-bold text-2xl mb-2">Hot movies</h1>
                 <Grid>
                     {movies.map((movie, index) => (
                         <Grid.Col key={index} span={{base: colSpan}}>
