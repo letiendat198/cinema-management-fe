@@ -65,12 +65,12 @@ function ScheduleForm(props: Props) {
                             label: room.roomNumber.toString()
                         }
                     })} 
-                    key={form.key('roomID._id')}
-                    {...form.getInputProps('roomID._id')}
+                    key={form.key('roomID')}
+                    {...form.getInputProps('roomID')}
                 />
                 <DateTimePicker
                     withAsterisk
-                    valueFormat="DD/MM/YYYY hh:mm:ss"
+                    valueFormat="DD/MM/YYYY HH:mm:ss"
                     label="Start Time"
                     placeholder="Start Time"
                     key={form.key('startTime')}
@@ -78,7 +78,7 @@ function ScheduleForm(props: Props) {
                 />
                 <DateTimePicker
                     withAsterisk
-                    valueFormat="DD/MM/YYYY hh:mm:ss"
+                    valueFormat="DD/MM/YYYY HH:mm:ss"
                     label="End Time"
                     placeholder="End Time"
                     key={form.key('endTime')}

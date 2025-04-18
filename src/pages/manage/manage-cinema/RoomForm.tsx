@@ -24,7 +24,7 @@ function RoomForm(props: Props) {
 
     let submitCallback = form.onSubmit((values) => {
         if (!props.edit){
-            if (props.cinemaId) values.cinemaId = props.cinemaId; // Populate cinema id when adding
+            if (props.cinemaId) values.cinemaID = props.cinemaId; // Populate cinema id when adding
             addRoom(values)
             .then(message => {
                 console.log(message)

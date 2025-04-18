@@ -18,13 +18,13 @@ function Home() {
     return (
         <div className="flex flex-col">
             <div>
-                <Carousel withIndicators height={400}>
+                <Carousel withIndicators>
                     <Carousel.Slide>
-                        <img className="object-fill" style={{height: 400, width: '100vw'}}
+                        <img className="object-fill aspect-5/2"
                             src="https://chieuphimquocgia.com.vn/_next/image?url=http%3A%2F%2Fapiv2.chieuphimquocgia.com.vn%2FContent%2FImages%2FBanner%2F0018483.jpg&w=1920&q=75"/>
                     </Carousel.Slide>
                     <Carousel.Slide>
-                        <img className="object-cover" style={{height: 400, width: '100vw'}}
+                        <img className="object-cover aspect-5/2"
                             src="https://chieuphimquocgia.com.vn/_next/image?url=http%3A%2F%2Fapiv2.chieuphimquocgia.com.vn%2FContent%2FImages%2FBanner%2F0018422.jpg&w=1920&q=75"/>
                     </Carousel.Slide>
                 </Carousel>    

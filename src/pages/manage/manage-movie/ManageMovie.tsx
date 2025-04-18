@@ -32,7 +32,7 @@ function ManageMovie() {
     const columns: DataTableColumn<Movie>[] = [
         {
             accessor: 'Image',
-            render: (record, index) => <img className="w-30" src={record.img} />
+            render: (record, index) => <img className="w-30 aspect-2/3" src={record.img} />
         },
         {
             accessor: 'title'

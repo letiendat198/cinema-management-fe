@@ -17,6 +17,7 @@ import { Notifications } from '@mantine/notifications';
 import ManageMovie from './pages/manage/manage-movie/ManageMovie.tsx';
 import ManageCinemaGeneral from './pages/manage/manage-cinema/ManageCinemaGeneral.tsx';
 import ManageSchedule from './pages/manage/manage-schedule/ManageSchedule.tsx';
+// import './debugCSS.css'
 
 const theme = createTheme({
     primaryColor: 'blue',

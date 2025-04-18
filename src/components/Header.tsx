@@ -16,16 +16,16 @@ function Header() {
                         </Menu.Target>
                         <Menu.Dropdown>
                             <Menu.Item>
-                                <Link to='/manage/user'>Manage User</Link>
+                                <Link className='flex' to='/manage/user'>Manage User</Link>
                             </Menu.Item>
                             <Menu.Item>
-                                <Link to='/manage/movie'>Manage Movie</Link>
+                                <Link className='flex' to='/manage/movie'>Manage Movie</Link>
                             </Menu.Item>
                             <Menu.Item>
-                                <Link to='/manage/cinema'>Manage Cinema</Link>
+                                <Link className='flex' to='/manage/cinema'>Manage Cinema</Link>
                             </Menu.Item>
                             <Menu.Item>
-                                <Link to='/manage/schedule'>Manage Schedule</Link>
+                                <Link className='flex' to='/manage/schedule'>Manage Schedule</Link>
                             </Menu.Item>
                         </Menu.Dropdown>
                     </Menu>

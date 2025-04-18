@@ -7,7 +7,7 @@ import { IconPencilMinus, IconTrash } from "@tabler/icons-react";
 import { deleteSchedule, getSchedulesByMovieId } from "../../../api/ScheduleAPI";
 import { notifications } from "@mantine/notifications";
 import ScheduleForm from "./ScheduleForm";
-import { Cinema } from "../../../types/Cinema";
+import { Cinema, isCinema } from "../../../types/Cinema";
 import { Movie } from "../../../types/Movie";
 import { getAllMovies } from "../../../api/MovieAPI";
 import { getAllCinemas } from "../../../api/CinemaAPI";
@@ -49,11 +49,11 @@ function ManageSchedule() {
         },
         {
             accessor: 'startTime',
-            render: (record) => dayjs(record.startTime).format('DD/MM/YYYY hh:mm:ss')
+            render: (record) => dayjs(record.startTime).format('DD/MM/YYYY HH:mm:ss')
         },
         {
             accessor: 'endTime',
-            render: (record) => dayjs(record.endTime).format('DD/MM/YYYY hh:mm:ss')
+            render: (record) => dayjs(record.endTime).format('DD/MM/YYYY HH:mm:ss')
         },
         {
             accessor: 'action',
@@ -112,7 +112,7 @@ function ManageSchedule() {
     useEffect(() => {
         if (scheduleData.length > 0) {
             let filteredData = scheduleData.filter(e => {
-                if (isRoom(e.roomID)) return e.roomID.cinemaId == selectedCinemaId;
+                if (isRoom(e.roomID) && isCinema(e.roomID.cinemaID)) return e.roomID.cinemaID._id == selectedCinemaId;
             });
             console.log(filteredData);
             setData(filteredData);
