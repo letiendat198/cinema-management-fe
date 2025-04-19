@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
 import { Movie } from "../types/Movie";
 import { getMovieById } from "../api/MovieAPI";
-import Booking from "../components/Booking";
+import MovieSchedule from "../components/MovieSchedule";
 
 function MovieDetails() {
     const params = useParams();
@@ -38,7 +38,7 @@ function MovieDetails() {
             </div>
             <div className="mt-4">
                 <p className="text-2xl font-bold mb-4">Schedule</p>
-                {movie?._id ? <Booking movieId={movie._id} /> : null}
+                {movie?._id ? <MovieSchedule movie={movie} /> : null}
             </div>
         </div>
     )

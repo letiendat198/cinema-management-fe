@@ -149,7 +149,7 @@ function ManageSeat(props: Props) {
             <div className="flex gap-10 mt-4">
                 {seatTypeData.map(e => {
                     return (
-                        <div key={e._id} className="flex gap-3">
+                        <div key={e._id} className="flex items-center gap-3">
                             <div className="h-8 w-8 rounded-md hover:cursor-pointer" 
                                 style={{backgroundColor: e.color}} 
                                 onClick={() => setSelectedSeatTypeValue(e.value)}>

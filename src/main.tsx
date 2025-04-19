@@ -32,7 +32,8 @@ createRoot(document.getElementById('root')!).render(
         <Routes>
           <Route path="/" element={<App />}>
             <Route index element={<Home />} />
-            <Route path="movie/:movieId" element={<MovieDetails/>}/>
+            <Route path="/movie/:movieId" element={<MovieDetails/>}>
+            </Route>
             <Route path='/manage'>
               <Route path="/manage/user" element={<ManageUser />}/>
               <Route path="/manage/movie" element={<ManageMovie />}/>
