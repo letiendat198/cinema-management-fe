@@ -10,7 +10,7 @@ function App() {
           <Header/>
         </AppShell.Header>
         <AppShell.Main>
-          <div className='px-20 mt-4'>
+          <div className='px-20 mt-4 mb-8'>
             <Outlet />  
           </div>
         </AppShell.Main>

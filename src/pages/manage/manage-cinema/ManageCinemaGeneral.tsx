@@ -8,7 +8,7 @@ import { getAllCinemas } from "../../../api/CinemaAPI";
 import { useToggle } from "@mantine/hooks";
 
 function ManageCinemaGeneral() {
-    const [cinemaData, setCinemaData] = useState<Cinema[]>();
+    const [cinemaData, setCinemaData] = useState<Cinema[]>([]);
     const [refresh, refreshToggle] = useToggle();
 
     useEffect(() => {
@@ -36,7 +36,7 @@ function ManageCinemaGeneral() {
                     <ManageRoom cinemaData={cinemaData} />
                 </Tabs.Panel>
                 <Tabs.Panel value="seat">
-                    <ManageSeat />
+                    <ManageSeat cinemaData={cinemaData} />
                 </Tabs.Panel>
             </Tabs>
         </div>
