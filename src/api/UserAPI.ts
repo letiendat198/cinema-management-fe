@@ -2,6 +2,23 @@ import { AxiosError } from "axios";
 import { User } from "../types/User";
 import { apiClient } from "./Client";
 
+const loginUser = async (username: string, password: string) => {
+    try {
+        let res = await apiClient.post(`/user/login`, {username, password});
+
+        return res.data.user;
+    }
+    catch (error: any) {
+        if (error.response) {
+            throw error.response.data.message;
+        }
+        else {
+            throw error;
+            console.log(error);
+        }
+    }
+}
+
 const getAllUser = async () => {
     let res = await apiClient.get('/user');
     let data: User[] = res.data?.data;
@@ -59,4 +76,4 @@ const deleteUser = async (id: string) => {
     }
 }
 
-export {getAllUser, getUserById, addUser, updateUser, deleteUser}
+export {loginUser, getAllUser, getUserById, addUser, updateUser, deleteUser}

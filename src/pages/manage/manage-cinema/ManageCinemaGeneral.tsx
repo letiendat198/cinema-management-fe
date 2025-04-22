@@ -6,8 +6,10 @@ import { useEffect, useState } from "react";
 import { Cinema } from "../../../types/Cinema";
 import { getAllCinemas } from "../../../api/CinemaAPI";
 import { useToggle } from "@mantine/hooks";
+import { useRestrictUser } from "../../../hooks/restrictUser";
 
 function ManageCinemaGeneral() {
+    useRestrictUser('admin');
     const [cinemaData, setCinemaData] = useState<Cinema[]>([]);
     const [refresh, refreshToggle] = useToggle();
 

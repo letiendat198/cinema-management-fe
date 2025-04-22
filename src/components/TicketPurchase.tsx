@@ -3,6 +3,7 @@ import { useState } from "react";
 import TicketSelect from "./TicketSelect";
 import { Schedule } from "../types/Schedule";
 import { Movie } from "../types/Movie";
+import { useRestrictUser } from "../hooks/restrictUser";
 
 interface Props {
     schedule: Schedule,
@@ -10,6 +11,7 @@ interface Props {
 
 function TicketPurchase(props: Props) {
     const [ticketStep, setTicketStep] = useState<number>(0);
+    useRestrictUser('user');
 
     return (
         <div>
@@ -23,6 +25,7 @@ function TicketPurchase(props: Props) {
                 <Stepper.Step label="Pay" description="Complete your purchase">
                     
                 </Stepper.Step>
+                {/* Stepper may pass its custom props to div, which result in errors in console. Ignore!*/}
                 <div className="flex gap-3 mt-auto">
                     {ticketStep > 0 ? <Button onClick={() => setTicketStep(step => step-1)}>Back</Button> : <></>}
                     <Button onClick={() => setTicketStep(step => step+1)}>Next</Button>

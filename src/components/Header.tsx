@@ -1,8 +1,16 @@
 import { Button, Menu, useMantineTheme } from '@mantine/core';
 import { Link } from 'react-router';
+import { useLoginState } from '../hooks/loginState';
+import Login from './Login';
+import { useUserStore } from '../hooks/userStore';
+import { IconUser } from '@tabler/icons-react';
 
 function Header() {
-    const theme = useMantineTheme();
+    const loginOpen = useLoginState(state => state.loginOpen);
+    const setForce = useLoginState(state => state.setForce);
+    const user = useUserStore(state => state.user);
+    const revokeUser = useUserStore(state => state.revokeUser);
+
     return (
         <div className='flex h-full justify-between items-center px-20'>
             <div className='flex justify-center items-center gap-10'>
@@ -10,7 +18,7 @@ function Header() {
                 <div className='flex justify-center items-center gap-4 mt-1'>
                     <Link className='hover:text-primary' to='/movies'>Movies</Link>
                     <Link className='hover:text-primary' to='/cinemas'>Cinema</Link>
-                    <Menu shadow='md' width={200} trigger='hover' position='bottom-start'>
+                    {user?.role == 'admin' ? <Menu shadow='md' width={200} trigger='hover' position='bottom-start'>
                         <Menu.Target>
                             <p className='hover:text-primary'>Manage</p>
                         </Menu.Target>
@@ -28,12 +36,31 @@ function Header() {
                                 <Link className='flex' to='/manage/schedule'>Manage Schedule</Link>
                             </Menu.Item>
                         </Menu.Dropdown>
-                    </Menu>
+                    </Menu> : <></>}
                 </div>  
             </div>
             <div className='flex justify-center items-center gap-4 mt-1'>
-                <Link className='hover:text-primary' to='/register'>Register</Link>
-                <Link className='hover:text-primary' to='/login'>Login</Link> 
+                {user ? <Menu shadow='md' width={200} trigger='hover' position='bottom-start'>
+                            <Menu.Target>
+                                <div className='flex gap-2'>
+                                    <IconUser />
+                                    <p className='hover:text-primary'>{user.username}</p>    
+                                </div>
+                            </Menu.Target>
+                            <Menu.Dropdown>
+                                <Menu.Item>
+                                    <Link className='flex' to='/manage/user'>Profile</Link>
+                                </Menu.Item>
+                                <Menu.Item>
+                                    <p onClick={revokeUser} className='flex'>Log out</p>
+                                </Menu.Item>
+                            </Menu.Dropdown>
+                        </Menu>
+                : <button className='hover:text-primary hover:cursor-pointer' onClick={() => {
+                    setForce(false);
+                    loginOpen();
+                }}>Login / Register</button>}
+                <Login />
             </div>
         </div>
     )

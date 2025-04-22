@@ -9,7 +9,7 @@ import '@mantine/notifications/styles.css';
 import '@mantine/dates/styles.css'; //if using mantine date picker features
 import 'mantine-datatable/styles.css';
 import App from './App.tsx'
-import Login from './pages/Login.tsx';
+import Login from './components/Login.tsx';
 import MovieDetails from './pages/MovieDetails.tsx';
 import Home from './pages/Home.tsx';
 import ManageUser from './pages/manage/manage-user/ManageUser.tsx';
@@ -31,6 +31,7 @@ createRoot(document.getElementById('root')!).render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />}>
+            {/* <Route path="/login" element={<Login />} /> */}
             <Route index element={<Home />} />
             <Route path="/movie/:movieId" element={<MovieDetails/>}>
             </Route>
@@ -41,10 +42,8 @@ createRoot(document.getElementById('root')!).render(
               <Route path="/manage/schedule" element={<ManageSchedule />} />
             </Route>
           </Route>
-          <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>  
     </MantineProvider>
-    
   </StrictMode>,
 )

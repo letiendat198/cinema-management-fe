@@ -7,8 +7,11 @@ import {DataTable, DataTableColumn} from 'mantine-datatable';
 import { useDisclosure, useToggle } from "@mantine/hooks";
 import UserForm from "./UserForm";
 import { notifications } from "@mantine/notifications";
+import { useRestrictUser } from "../../../hooks/restrictUser";
 
 function ManageUser() {
+    useRestrictUser('admin')
+
     const [data, setData] = useState<User[]>([]);
     const [selectedRecords, setSelectedRecords] = useState<User[]>([]);
     const [addOpened, {open: addOpen, close: addClose}] = useDisclosure(false);

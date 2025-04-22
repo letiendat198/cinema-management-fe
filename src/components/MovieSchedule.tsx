@@ -25,7 +25,7 @@ function MovieSchedule(props: Props) {
 
     const onScheduleClick = (schedule: Schedule) => {
         if (isRoom(schedule.roomID) && isCinema(schedule.roomID.cinemaID))
-            modalTitle.current = [props.movie.title, schedule.roomID.cinemaID.name, "Room " + schedule.roomID.roomNumber, dayjs(schedule.startTime).format("HH:mm")].join(" - ");
+            modalTitle.current = [props.movie.title, schedule.roomID.cinemaID.name, "Room " + schedule.roomID.roomNumber, dayjs(schedule.startTime).format("DD/MM HH:mm")].join(" - ");
 
         setSelectedSchedule(schedule);
         ticketOpen();
@@ -69,13 +69,13 @@ function MovieSchedule(props: Props) {
                 })}
             </div>
             <div>
-            <Calendar
-                getDayProps={(date) => ({
-                    selected: dayjs(date).isSame(selectedDate, 'date'), // For all dates in calendar, use this callback to determine if it's selected
-                    onClick: () => setSelectedDate(date),
-                })} />
+                <Calendar
+                    getDayProps={(date) => ({
+                        selected: dayjs(date).isSame(selectedDate, 'date'), // For all dates in calendar, use this callback to determine if it's selected
+                        onClick: () => setSelectedDate(date),
+                    })} />
             </div>
-            <Modal size='80%' opened={ticketOpened} onClose={ticketClose} title={modalTitle.current}>
+            <Modal size='auto' opened={ticketOpened} onClose={ticketClose} title={modalTitle.current}>
                 {selectedSchedule ? <TicketPurchase schedule={selectedSchedule} /> : <></>}
             </Modal>
         </div>

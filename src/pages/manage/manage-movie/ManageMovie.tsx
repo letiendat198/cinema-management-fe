@@ -7,8 +7,10 @@ import MovieForm from "./MovieForm";
 import { notifications } from "@mantine/notifications";
 import { Movie } from "../../../types/Movie";
 import { deleteMovie, getAllMovies } from "../../../api/MovieAPI";
+import { useRestrictUser } from "../../../hooks/restrictUser";
 
 function ManageMovie() {
+    useRestrictUser('admin')
     const [data, setData] = useState<Movie[]>([]);
     const [selectedRecords, setSelectedRecords] = useState<Movie[]>([]);
     const [addOpened, {open: addOpen, close: addClose}] = useDisclosure(false);

@@ -14,8 +14,11 @@ import { getAllCinemas } from "../../../api/CinemaAPI";
 import { isRoom, Room } from "../../../types/Room";
 import { getRoomsByCinemaId } from "../../../api/RoomAPI";
 import dayjs from 'dayjs';
+import { useRestrictUser } from "../../../hooks/restrictUser";
 
 function ManageSchedule() {
+    useRestrictUser('admin')
+
     const [data, setData] = useState<Schedule[]>([]); // Data for table
     const [scheduleData, setScheduleData] = useState<Schedule[]>([]); // Raw data 
     const [selectedRecords, setSelectedRecords] = useState<Schedule[]>([]);

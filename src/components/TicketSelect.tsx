@@ -14,16 +14,16 @@ interface Props {
 }
 
 function TicketSelect(props: Props) {
-    const [roomData, setRoomData] = useState<Room>();
-    const [seatData, setSeatData] = useState<Seat>();
+    const [roomData, setRoomData] = useState<Room>(); // For max row and column
+    const [seatData, setSeatData] = useState<Seat>(); // Seat map
     const [seatTypeData, setSeatTypeData] = useState<SeatType[]>();
     const [colorMap, setColorMap] = useState<Map<number, string>>(new Map());
 
-    const [valueData, setValueData] = useState<number[]>([]); // For easier modification
+    const [valueData, setValueData] = useState<number[]>([]); // For easier modification of selected seat value
     const [selectedSeats, setSelectedSeats] = useState<number[]>([]);
     const [totalPrice, setTotalPrice] = useState<number>(0);
 
-    const selectingValue = useRef<number>(10);
+    const selectingValue = useRef<number>(10); // Value to set a selected seat
 
     const onCellSelect = (index: number, value: number, isSelected: boolean) => {
         setValueData(valueData.map((e,i) => {
