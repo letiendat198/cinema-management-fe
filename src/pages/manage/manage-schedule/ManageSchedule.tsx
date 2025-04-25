@@ -154,6 +154,7 @@ function ManageSchedule() {
             </div>
             <div className="mt-4">
                 <DataTable 
+                        idAccessor='_id'
                         highlightOnHover
                         columns={columns} 
                         records={data} 

@@ -54,7 +54,7 @@ function MovieSchedule(props: Props) {
     return (
         <div className="grid grid-cols-3">
             <div className="col-span-2">
-                {Array.from(mappedScheduleData.keys()).map((cinemaName, index) => {
+                {mappedScheduleData.size > 0 ? Array.from(mappedScheduleData.keys()).map((cinemaName, index) => {
                     let schedules = mappedScheduleData.get(cinemaName);
                     return (
                         <div key={index} className="mb-2">
@@ -66,7 +66,7 @@ function MovieSchedule(props: Props) {
                             </div>
                         </div>
                     )
-                })}
+                }) : <p className="text-lg">No schedule found for this date</p>}
             </div>
             <div>
                 <Calendar

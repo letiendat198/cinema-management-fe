@@ -68,6 +68,7 @@ function ManageCinema(props: Props) {
             </div>
             <div className="mt-4">
                 <DataTable 
+                        idAccessor='_id'
                         highlightOnHover
                         columns={columns} 
                         records={props.data} 

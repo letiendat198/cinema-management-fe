@@ -11,6 +11,7 @@ import { Movie } from "../types/Movie";
 
 interface Props {
     schedule: Schedule,
+    onSeatChange: (newSeats: string[]) => void
 }
 
 function TicketSelect(props: Props) {
@@ -46,6 +47,10 @@ function TicketSelect(props: Props) {
             setTotalPrice(price => price - seatPrice);
         } 
     }
+
+    useEffect(() => {
+        if (seatData) props.onSeatChange(selectedSeats.map(seatIndex => seatData.labelMap[seatIndex]));
+    }, selectedSeats)
 
     useEffect(() => {
         let roomId = ""

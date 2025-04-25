@@ -17,6 +17,7 @@ import { Notifications } from '@mantine/notifications';
 import ManageMovie from './pages/manage/manage-movie/ManageMovie.tsx';
 import ManageCinemaGeneral from './pages/manage/manage-cinema/ManageCinemaGeneral.tsx';
 import ManageSchedule from './pages/manage/manage-schedule/ManageSchedule.tsx';
+import ManageItem from './pages/manage/manage-item/ManageItem.tsx';
 // import './debugCSS.css'
 
 const theme = createTheme({
@@ -40,6 +41,7 @@ createRoot(document.getElementById('root')!).render(
               <Route path="/manage/movie" element={<ManageMovie />}/>
               <Route path="/manage/cinema" element={<ManageCinemaGeneral />} />
               <Route path="/manage/schedule" element={<ManageSchedule />} />
+              <Route path='/manage/item' element={<ManageItem />} />
             </Route>
           </Route>
         </Routes>

@@ -35,6 +35,9 @@ function Header() {
                             <Menu.Item>
                                 <Link className='flex' to='/manage/schedule'>Manage Schedule</Link>
                             </Menu.Item>
+                            <Menu.Item>
+                                <Link className='flex' to='/manage/item'>Manage Item</Link>
+                            </Menu.Item>
                         </Menu.Dropdown>
                     </Menu> : <></>}
                 </div>  
