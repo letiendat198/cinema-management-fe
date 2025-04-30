@@ -39,7 +39,7 @@ interface Props {
 // Should be generic enough
 // Only cares about max row, max column, an array of value and label to lookup, a color map to look up value
 // On click, returns index, value, is selected (boolean toggle)
-function SeatMap(props: Props) {
+function SeatSelector(props: Props) {
     return (
         <div className="flex flex-col gap-1">
             {[...Array(props.maxRow)].map((_, r) => {
@@ -67,4 +67,4 @@ function SeatMap(props: Props) {
     )
 }
 
-export default SeatMap;
+export default SeatSelector;

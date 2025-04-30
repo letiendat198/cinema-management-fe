@@ -1,56 +1,63 @@
 import { useEffect, useRef, useState } from "react";
 import { Schedule } from "../types/Schedule";
-import SeatMap from "./SeatMap";
 import { isRoom, Room } from "../types/Room";
 import { getRoomById } from "../api/RoomAPI";
-import { Seat } from "../types/Seat";
+import { SeatDetail, SeatMap } from "../types/SeatMap";
 import { SeatType } from "../types/SeatType";
 import { getAllSeatTypes } from "../api/SeatTypeAPI";
-import { getSeatMapByRoomId } from "../api/SeatAPI";
-import { Movie } from "../types/Movie";
+import { getSeatMapByRoomId } from "../api/SeatMapAPI";
+import SeatSelector from "./SeatSelector";
+
 
 interface Props {
     schedule: Schedule,
-    onSeatChange: (newSeats: string[]) => void
+    onSeatChange: (newSeats: SeatDetail[], newPrice: number) => void
 }
 
 function TicketSelect(props: Props) {
     const [roomData, setRoomData] = useState<Room>(); // For max row and column
-    const [seatData, setSeatData] = useState<Seat>(); // Seat map
+    const [seatData, setSeatData] = useState<SeatMap>(); // Seat map
     const [seatTypeData, setSeatTypeData] = useState<SeatType[]>();
     const [colorMap, setColorMap] = useState<Map<number, string>>(new Map());
 
     const [valueData, setValueData] = useState<number[]>([]); // For easier modification of selected seat value
     const [selectedSeats, setSelectedSeats] = useState<number[]>([]);
-    const [totalPrice, setTotalPrice] = useState<number>(0);
+    const [totalPrice, setTotalPrice] = useState<number>(0); // For rendering price
+    // const totalPriceRef = useRef<number>(0); // For passing to callback, need to be immediate
 
     const selectingValue = useRef<number>(10); // Value to set a selected seat
 
     const onCellSelect = (index: number, value: number, isSelected: boolean) => {
         setValueData(valueData.map((e,i) => {
-            let originalValue = seatData ? seatData.seatMap[index] : 0
+            let originalValue = seatData ? seatData.valueMap[index] : 0
             if (i == index) {
                 return isSelected ? selectingValue.current : originalValue;
             }
             return e;
         })); // Change color
 
-        let seatPrice = seatTypeData?.find(e => e.value == seatData?.seatMap[index])?.price // Maybe should make this a map
+        // Get the price of selected seats
+        let seatPrice = seatTypeData?.find(e => e.value == seatData?.valueMap[index])?.price
         seatPrice = seatPrice ? seatPrice : 0;
 
+        // Add or subtract total price and update seats. State update should be batched and only cause 1 re-render
         if (isSelected) {
             setSelectedSeats([...selectedSeats, index]);    
             setTotalPrice(price => price + seatPrice);
+            // totalPriceRef.current += seatPrice;
         }
         else {
             setSelectedSeats([...selectedSeats].filter(e => e != index));
             setTotalPrice(price => price - seatPrice);
+            // totalPriceRef.current -= seatPrice;
         } 
     }
 
+    // Should only run once because React batch the 2 state update
     useEffect(() => {
-        if (seatData) props.onSeatChange(selectedSeats.map(seatIndex => seatData.labelMap[seatIndex]));
-    }, selectedSeats)
+        if (seatData) props.onSeatChange(selectedSeats.map(index => ({index, label: seatData.labelMap[index]}))
+            , totalPrice);
+    }, [selectedSeats, totalPrice])
 
     useEffect(() => {
         let roomId = ""
@@ -62,7 +69,7 @@ function TicketSelect(props: Props) {
         getSeatMapByRoomId(roomId).then(data => {
             if (data.length > 0){
                 setSeatData(data[0]);    
-                setValueData(data[0].seatMap);
+                setValueData(data[0].valueMap);
             } 
         })
     }, [])
@@ -100,7 +107,7 @@ function TicketSelect(props: Props) {
             </div>
             <div>
                 <div>
-                    {(roomData!=undefined && seatData!=undefined) ? <SeatMap maxColumn={roomData.maxColumn} 
+                    {(roomData!=undefined && seatData!=undefined) ? <SeatSelector maxColumn={roomData.maxColumn} 
                             maxRow={roomData.maxRow}
                             colorMap={colorMap}
                             valueData={valueData}

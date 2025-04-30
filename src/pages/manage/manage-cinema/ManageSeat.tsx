@@ -1,13 +1,13 @@
 import { Button, Select } from "@mantine/core";
 import { Cinema } from "../../../types/Cinema";
-import SeatMap from "../../../components/SeatMap";
+import SeatSelector from "../../../components/SeatSelector";
 import { useEffect, useRef, useState } from "react";
 import { Room } from "../../../types/Room";
 import { getRoomsByCinemaId } from "../../../api/RoomAPI";
 import { getAllSeatTypes } from "../../../api/SeatTypeAPI";
 import { SeatType } from "../../../types/SeatType";
-import { Seat } from "../../../types/Seat";
-import { addSeatMap, getSeatMapByRoomId, updateSeatMap } from "../../../api/SeatAPI";
+import { SeatMap } from "../../../types/SeatMap";
+import { addSeatMap, getSeatMapByRoomId, updateSeatMap } from "../../../api/SeatMapAPI";
 import { notifications } from "@mantine/notifications";
 
 interface Props {
@@ -18,7 +18,7 @@ function ManageSeat(props: Props) {
     const [roomData, setRoomData] = useState<Room[]>([]);
     const [seatTypeData, setSeatTypeData] = useState<SeatType[]>([]);
     const [colorMap, setColorMap] = useState<Map<number, string>>(new Map());
-    const seatMapData = useRef<Seat>(undefined);
+    const seatMapData = useRef<SeatMap>(undefined);
 
     const [selectedCinemaId, setSelectedCinemaId] = useState<string | null>();
     const [selectedRoomId, setSelectedRoomId] = useState<string | null>();
@@ -42,7 +42,7 @@ function ManageSeat(props: Props) {
         if (!selectedRoom) return;
         let data = {
             roomID: selectedRoom?._id,
-            seatMap: valueData,
+            valueMap: valueData,
             labelMap: labelData
         }
         console.log(seatMapData.current)
@@ -75,7 +75,7 @@ function ManageSeat(props: Props) {
             getSeatMapByRoomId(selectedRoom._id).then(data => {
                 if (data.length > 0) {
                     seatMapData.current = data[0];    
-                    setValueData(data[0].seatMap);
+                    setValueData(data[0].valueMap);
                     setLabelData(data[0].labelMap);
                 } 
                 else {
@@ -161,7 +161,7 @@ function ManageSeat(props: Props) {
             </div>
 
             <div className="mt-4 flex justify-center">
-                {selectedRoom ? <SeatMap maxColumn={selectedRoom.maxColumn} 
+                {selectedRoom ? <SeatSelector maxColumn={selectedRoom.maxColumn} 
                         maxRow={selectedRoom.maxRow}
                         colorMap={colorMap}
                         valueData={valueData}

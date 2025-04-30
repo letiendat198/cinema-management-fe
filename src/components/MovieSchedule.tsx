@@ -76,7 +76,7 @@ function MovieSchedule(props: Props) {
                     })} />
             </div>
             <Modal size='auto' opened={ticketOpened} onClose={ticketClose} title={modalTitle.current}>
-                {selectedSchedule ? <TicketPurchase schedule={selectedSchedule} /> : <></>}
+                {selectedSchedule ? <TicketPurchase schedule={selectedSchedule} onClose={ticketClose} /> : <></>}
             </Modal>
         </div>
     )

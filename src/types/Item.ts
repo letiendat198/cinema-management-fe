@@ -5,3 +5,8 @@ export interface Item {
     description: string,
     imageUrl: string
 }
+
+export interface ItemDetail {
+    item: Item,
+    quantity: number
+}

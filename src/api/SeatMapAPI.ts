@@ -1,15 +1,15 @@
-import { Seat } from "../types/Seat";
+import { SeatMap } from "../types/SeatMap";
 import { apiClient } from "./Client";
 
 const getSeatMapByRoomId = async (roomId: string) => {
-    let res = await apiClient.get(`/seat/${roomId}`);
-    let data: Seat[] = res.data?.data;
+    let res = await apiClient.get(`/seatmap/${roomId}`);
+    let data: SeatMap[] = res.data?.data;
     return data;
 }
 
-const addSeatMap = async (seat: Seat) => {
+const addSeatMap = async (seatmap: SeatMap) => {
     try {
-        let res = await apiClient.post(`/seat`, seat);
+        let res = await apiClient.post(`/seatmap`, seatmap);
         return res.data?.message;
     }
     catch (error: any) {
@@ -22,9 +22,9 @@ const addSeatMap = async (seat: Seat) => {
     }
 }
 
-const updateSeatMap = async (id: string, seat: Seat) => {
+const updateSeatMap = async (id: string, seatmap: SeatMap) => {
     try {
-        let res = await apiClient.put(`/seat/${id}`, seat);
+        let res = await apiClient.put(`/seatmap/${id}`, seatmap);
         return res.data?.message;
     }
     catch (error: any) {
@@ -39,7 +39,7 @@ const updateSeatMap = async (id: string, seat: Seat) => {
 
 const deleteSeatMap = async (id: string) => {
     try {
-        let res = await apiClient.delete(`/seat/${id}`);
+        let res = await apiClient.delete(`/seatmap/${id}`);
         return res.data?.message;
     }
     catch (error: any) {

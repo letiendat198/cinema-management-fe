@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { useLoginState } from '../hooks/loginState';
 import Login from './Login';
 import { useUserStore } from '../hooks/userStore';
-import { IconUser } from '@tabler/icons-react';
+import { IconTicket, IconUser } from '@tabler/icons-react';
 
 function Header() {
     const loginOpen = useLoginState(state => state.loginOpen);
@@ -43,16 +43,17 @@ function Header() {
                 </div>  
             </div>
             <div className='flex justify-center items-center gap-4 mt-1'>
+                <Link className='flex gap-2 hover:text-primary' to='/my-ticket'><IconTicket /> My ticket</Link>
                 {user ? <Menu shadow='md' width={200} trigger='hover' position='bottom-start'>
                             <Menu.Target>
-                                <div className='flex gap-2'>
+                                <div className='flex gap-2 hover:text-primary'>
                                     <IconUser />
-                                    <p className='hover:text-primary'>{user.username}</p>    
+                                    <p>{user.username}</p>    
                                 </div>
                             </Menu.Target>
                             <Menu.Dropdown>
                                 <Menu.Item>
-                                    <Link className='flex' to='/manage/user'>Profile</Link>
+                                    <Link className='flex' to='/profile'>Profile</Link>
                                 </Menu.Item>
                                 <Menu.Item>
                                     <p onClick={revokeUser} className='flex'>Log out</p>
