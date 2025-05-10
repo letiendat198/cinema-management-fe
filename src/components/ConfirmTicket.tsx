@@ -22,10 +22,9 @@ function ConfirmTicket(props: Props) {
                 })}</div>
                 <p><span className="font-semibold">Total: </span>{(props.price.itemPrice + props.price.ticketPrice).toLocaleString('vi-VI', {style: 'currency', currency: 'VND'})}</p>    
             </div>
-            <Radio.Group className="mt-2" label="Payment Method" name="payment">
+            <Radio.Group value='vnpay' className="mt-2" label="Payment Method" name="payment">
                 <div className="flex flex-col gap-3 mt-3">
-                    <Radio value="cash" label="Cash on check-in"/>
-                    <Radio value="soul" label="Soul"/>    
+                    <Radio value="vnpay" label="VNPay"/> 
                 </div>
             </Radio.Group>
         </div>

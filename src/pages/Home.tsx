@@ -3,17 +3,22 @@ import { Carousel } from '@mantine/carousel';
 import MovieBox from "../components/MovieBox"
 import { useEffect, useState } from "react";
 import { Movie } from "../types/Movie";
-import { getAllMovies } from "../api/MovieAPI";
+import { getAllMovies, getRecommendedMovie } from "../api/MovieAPI";
+import { useUserStore } from "../hooks/userStore";
 
 function Home() {
     const [movies, setMovies] = useState<Movie[]>([]);
+    const [movieRecommend, setMovieRecommend] = useState<Movie[]>([]);
+
+    const user = useUserStore(state => state.user);
     const colSpan = 2;
 
     useEffect(() => {
         getAllMovies().then((data) => {
             setMovies(data);
         });
-    }, [])
+        if (user) getRecommendedMovie(user._id).then(data => setMovieRecommend(data));
+    }, []);
 
     return (
         <div className="flex flex-col">
@@ -30,7 +35,17 @@ function Home() {
                 </Carousel>    
             </div>
             <div className="mt-2">
-                <h1 className="text-left font-bold text-2xl mb-2">Hot movies</h1>
+                <h1 className="text-left font-bold text-2xl mb-2">For you</h1>
+                <Grid>
+                    {movies.map((movie, index) => (
+                        <Grid.Col key={index} span={{base: colSpan}}>
+                            <MovieBox movie={movie}></MovieBox>
+                        </Grid.Col>    
+                    ))}
+                </Grid>    
+            </div>
+            <div className="mt-2">
+                <h1 className="text-left font-bold text-2xl mb-2">Ongoing</h1>
                 <Grid>
                     {movies.map((movie, index) => (
                         <Grid.Col key={index} span={{base: colSpan}}>

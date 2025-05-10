@@ -31,16 +31,17 @@ const getUserById = async (id: string | undefined) => {
     return data;
 }
 
-const addUser = async (user: User) => {
+const addUser = async (user: User | {username: string, password: string, email: string}) => {
     try {
         let res = await apiClient.post(`/user/register`, user);
-        return res.data?.message;
+        return res.data?.user;
     }
     catch (error: any) {
         if (error.response) {
-            return error.response.data.message;
+            throw error.response.data.message;
         }
         else {
+            throw error;
             console.log(error);
         }
     }

@@ -11,6 +11,7 @@ import { SeatDetail } from "../types/SeatMap";
 import { addOrder } from "../api/OrderAPI";
 import { useUserStore } from "../hooks/userStore";
 import { notifications } from "@mantine/notifications";
+import { getPaymentUrlForOrder } from "../api/PaymentAPI";
 
 interface Props {
     schedule: Schedule,
@@ -63,9 +64,14 @@ function TicketPurchase(props: Props) {
         }).then(data => {
             notifications.show({
                 title: 'Create new order',
-                message: data,
+                message: 'New order created successfully',
             });
-            props.onClose();
+
+            getPaymentUrlForOrder(data._id).then(url => {
+                const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+                if (newWindow) newWindow.opener = null;
+                props.onClose();
+            })
         }).catch(error => {
             notifications.show({
                 title: 'Create new order',

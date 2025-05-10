@@ -44,26 +44,25 @@ function Header() {
             </div>
             <div className='flex justify-center items-center gap-4 mt-1'>
                 <Link className='flex gap-2 hover:text-primary' to='/my-ticket'><IconTicket /> My ticket</Link>
-                {user ? <Menu shadow='md' width={200} trigger='hover' position='bottom-start'>
-                            <Menu.Target>
-                                <div className='flex gap-2 hover:text-primary'>
-                                    <IconUser />
-                                    <p>{user.username}</p>    
-                                </div>
-                            </Menu.Target>
-                            <Menu.Dropdown>
-                                <Menu.Item>
-                                    <Link className='flex' to='/profile'>Profile</Link>
-                                </Menu.Item>
-                                <Menu.Item>
-                                    <p onClick={revokeUser} className='flex'>Log out</p>
-                                </Menu.Item>
-                            </Menu.Dropdown>
-                        </Menu>
-                : <button className='hover:text-primary hover:cursor-pointer' onClick={() => {
-                    setForce(false);
-                    loginOpen();
-                }}>Login / Register</button>}
+                <div className='flex gap-2 hover:text-primary'>
+                    <IconUser />
+                    <Menu shadow='md' width={200} trigger='hover' position='bottom-start'>
+                        <Menu.Target>
+                            {user ?  <p>{user.username}</p> : <button className='hover:text-primary hover:cursor-pointer' onClick={() => {
+                                setForce(false);
+                                loginOpen();
+                            }}>Login / Register</button>}   
+                        </Menu.Target>    
+                        <Menu.Dropdown>
+                            <Menu.Item>
+                                <Link className='flex' to='/profile'>Profile</Link>
+                            </Menu.Item>
+                            <Menu.Item>
+                                <p onClick={revokeUser} className='flex'>Log out</p>
+                            </Menu.Item>
+                        </Menu.Dropdown>
+                    </Menu>
+                </div>  
                 <Login />
             </div>
         </div>

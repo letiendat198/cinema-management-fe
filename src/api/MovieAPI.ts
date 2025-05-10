@@ -7,6 +7,12 @@ const getAllMovies = async () => {
     return data;
 }
 
+const getRecommendedMovie = async (userId: string) => {
+    let res = await apiClient.get(`/movie/recommendations/${userId}`);
+    let data: Movie[] = res.data?.data;
+    return data;
+}
+
 const getMovieById = async (id: string | undefined) => {
     let res = await apiClient.get(`/movie/${id}`);
     let data: Movie = res.data?.data;
@@ -58,4 +64,4 @@ const deleteMovie = async (id: string) => {
     }
 }
 
-export {getAllMovies, getMovieById, addMovie, updateMovie, deleteMovie}
+export {getAllMovies, getRecommendedMovie, getMovieById, addMovie, updateMovie, deleteMovie}

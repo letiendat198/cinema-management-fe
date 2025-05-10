@@ -24,7 +24,14 @@ function UserForm(props: Props) {
     let submitCallback = form.onSubmit((values) => {
         if (!props.edit){
             addUser(values)
-            .then(message => {
+            .then(data => {
+                console.log(data)
+                notifications.show({
+                    title: 'Add new user',
+                    message: 'New user added successfully',
+                })
+                if (props.onSubmit) props.onSubmit();
+            }).catch(message => {
                 console.log(message)
                 notifications.show({
                     title: 'Add new user',

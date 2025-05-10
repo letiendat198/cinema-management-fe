@@ -7,6 +7,12 @@ const getAllOrders = async () => {
     return data;
 }
 
+const getOrderById = async (id: string | undefined)=> {
+    let res = await apiClient.get(`/order/${id}`);
+    let data: Order = res.data?.data;
+    return data;
+}
+
 const getOrderByUserId = async (id: string | undefined)=> {
     let res = await apiClient.get(`/order/by-user/${id}`);
     let data: Order[] = res.data?.data;
@@ -16,7 +22,8 @@ const getOrderByUserId = async (id: string | undefined)=> {
 const addOrder = async (order: OrderTemp) => {
     try {
         let res = await apiClient.post(`/order`, order);
-        return res.data?.message;
+        let newOrderData: Order = res.data?.data 
+        return newOrderData;
     }
     catch (error: any) {
         if (error.response) {
@@ -58,4 +65,4 @@ const deleteOrder = async (id: string) => {
     }
 }
 
-export {getAllOrders, getOrderByUserId, addOrder, updateOrder, deleteOrder}
+export {getAllOrders, getOrderById, getOrderByUserId, addOrder, updateOrder, deleteOrder}

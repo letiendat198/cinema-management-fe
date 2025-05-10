@@ -20,6 +20,8 @@ import ManageSchedule from './pages/manage/manage-schedule/ManageSchedule.tsx';
 import ManageItem from './pages/manage/manage-item/ManageItem.tsx';
 import UserTicket from './pages/UserTicket.tsx';
 import UserProfile from './pages/UserProfile.tsx';
+import VerifyPayment from './pages/VerifyPayment.tsx';
+import UserOrderGeneral from './pages/UserOrderGeneral.tsx';
 // import './debugCSS.css'
 
 const theme = createTheme({
@@ -37,8 +39,9 @@ createRoot(document.getElementById('root')!).render(
             {/* <Route path="/login" element={<Login />} /> */}
             <Route index element={<Home />} />
             <Route path="/movie/:movieId" element={<MovieDetails/>} />
-            <Route path='/my-ticket' element={<UserTicket/>} />
+            <Route path='/my-ticket' element={<UserOrderGeneral/>} />
             <Route path='/profile' element={<UserProfile />} />
+            <Route path='/verify-payment' element={<VerifyPayment />} />
             <Route path='/manage'>
               <Route path="/manage/user" element={<ManageUser />}/>
               <Route path="/manage/movie" element={<ManageMovie />}/>
