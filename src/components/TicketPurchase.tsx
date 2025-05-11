@@ -96,7 +96,7 @@ function TicketPurchase(props: Props) {
                 <div className="mt-auto">
                     <div className="flex gap-3">
                         {ticketStep > 0 ? <Button onClick={() => setTicketStep(step => step-1)}>Back</Button> : <></>}
-                        <Button onClick={() => {
+                        <Button disabled={selectedSeats.length == 0} onClick={() => {
                             if (ticketStep < 2) setTicketStep(step => step+1);
                             else submitOrder();  
                         }}>{ticketStep < 2 ? "Next" : "Confirm"}</Button>

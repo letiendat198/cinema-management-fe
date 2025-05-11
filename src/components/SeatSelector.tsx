@@ -13,7 +13,9 @@ interface CellProps {
 function SeatCell(props: CellProps) {
     const isSelected = useRef<boolean>(false);
     return (
-        <div className='flex justify-center items-center h-8 w-8 rounded-md select-none hover:cursor-pointer'
+        <div className={props.selectable ? 
+                'flex justify-center items-center h-8 w-8 rounded-md select-none hover:cursor-pointer' : 
+                'flex justify-center items-center h-8 w-8 rounded-md select-none'}
             style={{backgroundColor: props.color}} 
             onClick={() => {
                 if (!props.selectable) return;
@@ -53,7 +55,7 @@ function SeatSelector(props: Props) {
                             let label = props.labelData[index];
 
                             return <SeatCell key={c} 
-                                            selectable 
+                                            selectable = {value >= 0} // Only positive value allow selection
                                             index={index} 
                                             value = {value}
                                             color = {color}

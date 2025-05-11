@@ -7,6 +7,7 @@ import { SeatType } from "../types/SeatType";
 import { getAllSeatTypes } from "../api/SeatTypeAPI";
 import { getSeatMapByRoomId } from "../api/SeatMapAPI";
 import SeatSelector from "./SeatSelector";
+import { getTicketByScheduleId } from "../api/TicketAPI";
 
 
 interface Props {
@@ -59,6 +60,7 @@ function TicketSelect(props: Props) {
             , totalPrice);
     }, [selectedSeats, totalPrice])
 
+    // Get room and seat map info
     useEffect(() => {
         let roomId = ""
         if (isRoom(props.schedule.roomID)) roomId = props.schedule.roomID._id;
@@ -69,11 +71,19 @@ function TicketSelect(props: Props) {
         getSeatMapByRoomId(roomId).then(data => {
             if (data.length > 0){
                 setSeatData(data[0]);    
-                setValueData(data[0].valueMap);
+                let values = data[0].valueMap;
+
+                // Get booked seats
+                getTicketByScheduleId(props.schedule._id).then(data => {
+                    let bookedSeats = data.map(ticket => ticket.seatIndex);
+                    bookedSeats.forEach(index => values[index] = -1); // HARD CODED
+                    setValueData(values);
+                }) 
             } 
         })
     }, [])
 
+    // Get seat types
     useEffect(() => {
         getAllSeatTypes().then(data => {
             setSeatTypeData(data);

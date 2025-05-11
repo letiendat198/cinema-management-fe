@@ -19,4 +19,10 @@ const getTicketByUserId = async (id: string | undefined)=> {
     return data;
 }
 
-export {getAllTickets, getTicketById, getTicketByUserId}
+const getTicketByScheduleId = async (id: string | undefined)=> {
+    let res = await apiClient.get(`/ticket/by-schedule/${id}`);
+    let data: Ticket[] = res.data?.data;
+    return data;
+}
+
+export {getAllTickets, getTicketById, getTicketByUserId, getTicketByScheduleId}
