@@ -4,8 +4,3 @@ export interface SeatMap {
     valueMap: number[],
     labelMap: string[]
 }
-
-export interface SeatDetail {
-    index: number,
-    label: string
-}

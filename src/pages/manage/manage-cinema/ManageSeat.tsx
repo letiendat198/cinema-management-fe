@@ -5,10 +5,10 @@ import { useEffect, useRef, useState } from "react";
 import { Room } from "../../../types/Room";
 import { getRoomsByCinemaId } from "../../../api/RoomAPI";
 import { getAllSeatTypes } from "../../../api/SeatTypeAPI";
-import { SeatType } from "../../../types/SeatType";
-import { SeatMap } from "../../../types/SeatMap";
-import { addSeatMap, getSeatMapByRoomId, updateSeatMap } from "../../../api/SeatMapAPI";
+import { isSeatType, SeatType } from "../../../types/SeatType";
 import { notifications } from "@mantine/notifications";
+import { Seat } from "../../../types/Seat";
+import { createSeatForRoom, getSeatsByRoomId, updateSeats } from "../../../api/SeatAPI";
 
 interface Props {
     cinemaData: Cinema[];
@@ -16,82 +16,49 @@ interface Props {
 
 function ManageSeat(props: Props) {
     const [roomData, setRoomData] = useState<Room[]>([]);
+    const [seatsData, setSeatsData] = useState<Seat[]>([]);
     const [seatTypeData, setSeatTypeData] = useState<SeatType[]>([]);
-    const [colorMap, setColorMap] = useState<Map<number, string>>(new Map());
-    const seatMapData = useRef<SeatMap>(undefined);
 
     const [selectedCinemaId, setSelectedCinemaId] = useState<string | null>();
     const [selectedRoomId, setSelectedRoomId] = useState<string | null>();
     const [selectedRoom, setSelectedRoom] = useState<Room | null>();
-    const [selectedSeatTypeValue, setSelectedSeatTypeValue] = useState<number>(0);
+    const [selectedSeatType, setSelectedSeatType] = useState<SeatType>();
 
-    const [valueData, setValueData] = useState<number[]>([]);
-    const [labelData, setLabelData] = useState<string[]>([]);
+    const updatedSeats = useRef<Seat[]>([]);
 
     const onCellSelect = (index: number, value: number, isSelected: boolean) => {
-        setValueData(valueData.map((e,i) => {
-            if (i == index) {
-                if (value != selectedSeatTypeValue) return selectedSeatTypeValue;
-                return isSelected ? selectedSeatTypeValue : 0;
-            }
-            return e;
-        }))
+        if (!selectedSeatType) return;
+        let newSeat = seatsData[index];
+        newSeat.seatType = selectedSeatType;
+        setSeatsData(seatsData.map((v,i) => {
+            if (i != index) return v;
+            else return newSeat;
+        }));
+
+        updatedSeats.current.push(newSeat);
     }   
 
     const onSubmit = () => {
         if (!selectedRoom) return;
-        let data = {
-            roomID: selectedRoom?._id,
-            valueMap: valueData,
-            labelMap: labelData
-        }
-        console.log(seatMapData.current)
-        if (seatMapData.current && seatMapData.current._id) {
-            updateSeatMap(seatMapData.current._id, data)
-            .then(message => {
-                console.log(message)
-                notifications.show({
-                    title: 'Update seat map',
-                    message: message,
-                });
-            })
-        }
-        else {
-            addSeatMap(data)
-            .then(message => {
-                console.log(message)
-                notifications.show({
-                    title: 'Add seat map',
-                    message: message,
-                });
-            })
-        }
+        
+        let payload = updatedSeats.current.map(e => {
+            if (isSeatType(e.seatType)) e.seatType = e.seatType._id;
+            return e;
+        })
 
+        updateSeats(payload).then(message => {
+            notifications.show({
+                title: 'Update Seat',
+                message: message,
+            });
+        })
     }
 
-    // Init value and label arrays for selected room if not existed
     useEffect(() => {
-        if (selectedRoom) {
-            getSeatMapByRoomId(selectedRoom._id).then(data => {
-                if (data.length > 0) {
-                    seatMapData.current = data[0];    
-                    setValueData(data[0].valueMap);
-                    setLabelData(data[0].labelMap);
-                } 
-                else {
-                    seatMapData.current = undefined;
-                    setValueData(Array(selectedRoom.maxColumn * selectedRoom.maxRow).fill(0));
-                    let label = [];
-                    for (let r=0; r<selectedRoom.maxRow; r++) {
-                        for (let c=0; c<selectedRoom.maxColumn; c++) {
-                            label[r*selectedRoom.maxColumn + c] = String.fromCharCode(r + 65) + c;
-                        }
-                    }
-                    setLabelData(label);
-                }
-            })
-        }
-
+        if (!selectedRoom) return;
+        createSeatForRoom(selectedRoom._id).then(message => { // Make sure seats are already created
+            getSeatsByRoomId(selectedRoom._id).then(data => setSeatsData(data));    
+        })
     }, [selectedRoom])
 
     // Get rooms of a cinema
@@ -105,12 +72,6 @@ function ManageSeat(props: Props) {
     useEffect(() => {
         getAllSeatTypes().then(data => {
             setSeatTypeData(data);
-
-            let map = new Map<number,string>();
-            data.forEach(e => {
-                map.set(e.value, e.color);
-            })
-            setColorMap(map);
         })
     }, [])
 
@@ -152,7 +113,7 @@ function ManageSeat(props: Props) {
                         <div key={e._id} className="flex items-center gap-3">
                             <div className="h-8 w-8 rounded-md hover:cursor-pointer" 
                                 style={{backgroundColor: e.color}} 
-                                onClick={() => setSelectedSeatTypeValue(e.value)}>
+                                onClick={() => setSelectedSeatType(e)}>
                             </div>
                             <p>{e.label}</p>
                         </div>
@@ -161,11 +122,9 @@ function ManageSeat(props: Props) {
             </div>
 
             <div className="mt-4 flex justify-center">
-                {selectedRoom ? <SeatSelector maxColumn={selectedRoom.maxColumn} 
+                {selectedRoom && seatsData.length && seatsData[0].roomID == selectedRoom._id ? <SeatSelector maxColumn={selectedRoom.maxColumn} 
                         maxRow={selectedRoom.maxRow}
-                        colorMap={colorMap}
-                        valueData={valueData}
-                        labelData={labelData}
+                        seats={seatsData}
                         onCellSelect={onCellSelect} /> : <p className="font-semibold text-xl">Please select a room</p>}
             </div>
         </div>

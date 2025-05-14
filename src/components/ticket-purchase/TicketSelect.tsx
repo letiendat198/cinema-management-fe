@@ -2,53 +2,55 @@ import { useEffect, useRef, useState } from "react";
 import { Schedule } from "../../types/Schedule";
 import { isRoom, Room } from "../../types/Room";
 import { getRoomById } from "../../api/RoomAPI";
-import { SeatDetail, SeatMap } from "../../types/SeatMap";
-import { SeatType } from "../../types/SeatType";
+import { SeatMap } from "../../types/SeatMap";
+import { isSeatType, SeatType } from "../../types/SeatType";
 import { getAllSeatTypes } from "../../api/SeatTypeAPI";
 import { getSeatMapByRoomId } from "../../api/SeatMapAPI";
 import SeatSelector from "../SeatSelector";
 import { getTicketByScheduleId } from "../../api/TicketAPI";
+import { Seat } from "../../types/Seat";
+import { getSeatsByRoomId } from "../../api/SeatAPI";
 
 
 interface Props {
     schedule: Schedule,
-    onSeatChange: (newSeats: SeatDetail[], newPrice: number) => void
+    onSeatChange: (newSeats: Seat[], newPrice: number) => void
 }
 
 function TicketSelect(props: Props) {
     const [roomData, setRoomData] = useState<Room>(); // For max row and column
-    const [seatData, setSeatData] = useState<SeatMap>(); // Seat map
+    const [seatData, setSeatData] = useState<Seat[]>([]); // Seat map
     const [seatTypeData, setSeatTypeData] = useState<SeatType[]>();
-    const [colorMap, setColorMap] = useState<Map<number, string>>(new Map());
 
-    const [valueData, setValueData] = useState<number[]>([]); // For easier modification of selected seat value
-    const [selectedSeats, setSelectedSeats] = useState<number[]>([]);
+    const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
     const [totalPrice, setTotalPrice] = useState<number>(0); // For rendering price
-    // const totalPriceRef = useRef<number>(0); // For passing to callback, need to be immediate
 
-    const selectingValue = useRef<number>(10); // Value to set a selected seat
+    const selectingType = useRef<SeatType>(undefined);
 
     const onCellSelect = (index: number, value: number, isSelected: boolean) => {
-        setValueData(valueData.map((e,i) => {
-            let originalValue = seatData ? seatData.valueMap[index] : 0
+        setSeatData(seatData.map((e,i) => {
             if (i == index) {
-                return isSelected ? selectingValue.current : originalValue;
+                let selectedSeat = e;
+                if (!selectingType.current) return e;
+                if (!isSeatType(selectedSeat.seatType)) return e;
+                selectedSeat.seatType = selectingType.current;
+                return isSelected ? selectedSeat : e;
             }
             return e;
         })); // Change color
 
         // Get the price of selected seats
-        let seatPrice = seatTypeData?.find(e => e.value == seatData?.valueMap[index])?.price
+        let seatPrice = seatTypeData?.find(e => e.value == value)?.price
         seatPrice = seatPrice ? seatPrice : 0;
 
         // Add or subtract total price and update seats. State update should be batched and only cause 1 re-render
         if (isSelected) {
-            setSelectedSeats([...selectedSeats, index]);    
+            setSelectedSeats([...selectedSeats, seatData[index]]);    
             setTotalPrice(price => price + seatPrice);
             // totalPriceRef.current += seatPrice;
         }
         else {
-            setSelectedSeats([...selectedSeats].filter(e => e != index));
+            setSelectedSeats([...selectedSeats].filter((e, i) => i != index));
             setTotalPrice(price => price - seatPrice);
             // totalPriceRef.current -= seatPrice;
         } 
@@ -56,8 +58,7 @@ function TicketSelect(props: Props) {
 
     // Should only run once because React batch the 2 state update
     useEffect(() => {
-        if (seatData) props.onSeatChange(selectedSeats.map(index => ({index, label: seatData.labelMap[index]}))
-            , totalPrice);
+        if (seatData) props.onSeatChange(selectedSeats, totalPrice);
     }, [selectedSeats, totalPrice])
 
     // Get room and seat map info
@@ -68,34 +69,15 @@ function TicketSelect(props: Props) {
 
         getRoomById(roomId).then(data => setRoomData(data));
 
-        getSeatMapByRoomId(roomId).then(data => {
-            if (data.length > 0){
-                setSeatData(data[0]);    
-                let values = data[0].valueMap;
-
-                // Get booked seats
-                getTicketByScheduleId(props.schedule._id).then(data => {
-                    let bookedSeats = data.map(ticket => ticket.seatIndex);
-                    bookedSeats.forEach(index => values[index] = -1); // HARD CODED
-                    setValueData(values);
-                }) 
-            } 
-        })
+        getSeatsByRoomId(roomId).then(data => setSeatData(data));
     }, [])
 
     // Get seat types
     useEffect(() => {
         getAllSeatTypes().then(data => {
-            setSeatTypeData(data);
-
-            let map = new Map<number,string>();
-            data.forEach(e => {
-                map.set(e.value, e.color);
-                if (e.label=="Selecting") selectingValue.current = e.value; // Might run into problem if label changes
-            })
-
-            setColorMap(map);
-        })
+            setSeatTypeData(data)
+            selectingType.current = data.find(e => e.label == "Selecting");
+        });
     }, [])
 
     return (
@@ -117,15 +99,13 @@ function TicketSelect(props: Props) {
             </div>
             <div>
                 <div>
-                    {(roomData!=undefined && seatData!=undefined) ? <SeatSelector maxColumn={roomData.maxColumn} 
+                    {(roomData!=undefined && seatData.length) ? <SeatSelector maxColumn={roomData.maxColumn} 
                             maxRow={roomData.maxRow}
-                            colorMap={colorMap}
-                            valueData={valueData}
-                            labelData={seatData.labelMap}
+                            seats={seatData}
                             onCellSelect={onCellSelect}/> : <p>Invalid room</p>}
                 </div>    
                 <div className=" mt-2 flex flex-col">
-                    <p><span className="font-bold">Seat selected: </span>{selectedSeats.map(e => seatData?.labelMap[e]).join(', ')}</p>
+                    <p><span className="font-bold">Seat selected: </span>{selectedSeats.map(e => e.label).join(', ')}</p>
                     <p><span className="font-bold">Total price: </span> {totalPrice.toLocaleString('vi-VI', {style: 'currency', currency: 'VND'})}</p>
                 </div>
             </div>

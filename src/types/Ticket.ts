@@ -1,6 +1,7 @@
 import { Movie } from "./Movie";
 import { Room } from "./Room";
 import { Schedule } from "./Schedule";
+import { Seat } from "./Seat";
 
 export interface Ticket {
     _id: string,
@@ -12,10 +13,9 @@ export interface Ticket {
         startTime: Date,
         endTime: Date 
     },
-    seatIndex: number,
+    seat: Seat,
     user: string,
     status: string,
     ticketCode: string,
     checkinDate: Date,
-    seatLabel: string
 }

@@ -7,11 +7,11 @@ import { useRestrictUser } from "../../hooks/restrictUser";
 import ItemSelect from "./ItemSelect";
 import { Item, ItemDetail } from "../../types/Item";
 import ConfirmTicket from "./ConfirmTicket";
-import { SeatDetail } from "../../types/SeatMap";
 import { addOrder } from "../../api/OrderAPI";
 import { useUserStore } from "../../hooks/userStore";
 import { notifications } from "@mantine/notifications";
 import { getPaymentUrlForOrder } from "../../api/PaymentAPI";
+import { Seat } from "../../types/Seat";
 
 interface Props {
     schedule: Schedule,
@@ -26,14 +26,14 @@ interface Price {
 function TicketPurchase(props: Props) {
     useRestrictUser('user');
     const [ticketStep, setTicketStep] = useState<number>(0);
-    const [selectedSeats, setSelectedSeats] = useState<SeatDetail[]>([]);
+    const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
     const [selectedItems, setSelectedItems] = useState<ItemDetail[]>([]);
     const [price, setPrice] = useState<Price>({itemPrice: 0, ticketPrice: 0});
 
     const itemsData = useRef<{item: string, quantity: number}[]>([]);
     const userId = useUserStore(state => state.user)?._id;
 
-    const onSelectedSeatChange = (seats: SeatDetail[], newPrice: number) => {
+    const onSelectedSeatChange = (seats: Seat[], newPrice: number) => {
         console.log(seats)
         setSelectedSeats(seats);
         setPrice(oldPrice => ({...oldPrice, ticketPrice: newPrice}))
@@ -59,7 +59,7 @@ function TicketPurchase(props: Props) {
         addOrder({
             userID: userId ? userId : "No user ID",
             complementItems: itemsData.current,
-            seatsIndex: selectedSeats.map(e => e.index),
+            seatsID: selectedSeats.map(e => e._id),
             showtime: props.schedule._id
         }).then(data => {
             notifications.show({

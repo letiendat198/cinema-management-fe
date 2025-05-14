@@ -33,7 +33,7 @@ function Home() {
                 </Carousel>    
             </div>
             {movieRecommend.length ? <div className="mt-2">
-                <h1 className="text-left font-bold text-2xl mb-2">Based on your recent movies</h1>
+                <h1 className="text-left font-bold text-3xl mb-2">Based on your recent movies</h1>
                 <div className='grid grid-cols-4 gap-7'>
                     {movieRecommend.map((movie, index) => (
                         <div key={index}>
@@ -43,7 +43,7 @@ function Home() {
                 </div>    
             </div> : <></>}
             <div className="mt-2">
-                <h1 className="text-left font-bold text-2xl mb-2">Popular</h1>
+                <h1 className="text-left font-bold text-3xl mb-2">Popular</h1>
                 <div className='grid grid-cols-4 gap-7'>
                     {movies.map((movie, index) => (
                         <div key={index}>

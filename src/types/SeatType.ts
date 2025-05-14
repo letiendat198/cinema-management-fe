@@ -5,3 +5,12 @@ export interface SeatType {
     price: number,
     value: number
 }
+
+export function isSeatType(object: any): object is SeatType {
+    try {
+        return 'label' in object;    
+    }
+    catch {
+        return false;
+    }
+}

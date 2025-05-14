@@ -2,6 +2,8 @@ import { Item } from "./Item"
 import { Movie } from "./Movie"
 import { Room } from "./Room"
 import { Schedule } from "./Schedule"
+import { Seat } from "./Seat"
+import { Ticket } from "./Ticket"
 
 export interface OrderTemp { // Info needed to create a new order
     userID: string,
@@ -9,7 +11,7 @@ export interface OrderTemp { // Info needed to create a new order
         item: string,
         quantity: number
     }[],
-    seatsIndex: number[],
+    seatsID: string[],
     showtime: string
 }
 
@@ -20,7 +22,7 @@ export interface Order {
         item: Item,
         quantity: number
     }[],
-    tickets: string[],
+    tickets: Ticket[],
     showtime: {
         _id: string,
         movieID: Movie, // In-consistent warning
@@ -30,6 +32,5 @@ export interface Order {
     },
     totalPrice: number,
     status: string,
-    _tempSeats: number[],
-    seatsLabel: string[]
+    _tempSeats: Seat[],
 }

@@ -1,5 +1,7 @@
 import { useToggle } from "@mantine/hooks"
 import { useRef, useState } from "react";
+import { Seat } from "../types/Seat";
+import { isSeatType } from "../types/SeatType";
 
 interface CellProps {
     selectable: boolean,
@@ -32,9 +34,7 @@ function SeatCell(props: CellProps) {
 interface Props {
     maxRow: number,
     maxColumn: number,
-    valueData: number[],
-    labelData: string[],
-    colorMap: Map<number, string>,
+    seats: Seat[],
     onCellSelect: (index: number, value: number, isSelected: boolean) => void
 }
 
@@ -48,11 +48,12 @@ function SeatSelector(props: Props) {
                 return (
                     <div key={r} className="flex gap-1">
                         {[...Array(props.maxColumn)].map((_, c) => {
-                            let index = props.maxColumn*r + c;
-                            let value = props.valueData[index];
-                            let color = props.colorMap.get(value);
+                            let index = r*props.maxColumn + c;
+                            if (!isSeatType(props.seats[index].seatType)) return;
+                            let value = props.seats[index].seatType.value;
+                            let color = props.seats[index].seatType.color;
                             color = color ? color : "#000000"
-                            let label = props.labelData[index];
+                            let label = props.seats[index].label;
 
                             return <SeatCell key={c} 
                                             selectable = {value >= 0} // Only positive value allow selection

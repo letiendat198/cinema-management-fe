@@ -1,9 +1,9 @@
 import { Radio } from "@mantine/core";
 import { Item, ItemDetail } from "../../types/Item";
-import { SeatDetail } from "../../types/SeatMap";
+import { Seat } from "../../types/Seat";
 
 interface Props {
-    seats: SeatDetail[],
+    seats: Seat[],
     items: ItemDetail[]
     price: {
         itemPrice: number,
