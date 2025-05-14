@@ -50,7 +50,7 @@ function MovieDetails() {
                     <p className="flex-1 text-lg"><span className="font-semibold">Rated:</span> {movie?.rating}</p>    
                 </div>
             </div>
-            <div className="mt-4">
+            <div>
                 <p className="text-2xl font-bold">Description</p>
                 <p>{movie?.description}</p>
             </div>

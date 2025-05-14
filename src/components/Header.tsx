@@ -58,7 +58,10 @@ function Header() {
                                 <Link className='flex' to='/profile'>Profile</Link>
                             </Menu.Item>
                             <Menu.Item>
-                                <p onClick={revokeUser} className='flex'>Log out</p>
+                                <p onClick={() => {
+                                    revokeUser();
+                                    window.location.reload();
+                                }} className='flex'>Log out</p>
                             </Menu.Item>
                         </Menu.Dropdown>
                     </Menu>

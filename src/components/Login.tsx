@@ -41,6 +41,7 @@ function Login() {
         loginUser(values.username, values.password).then(user => {
             setUser(user);
             close();
+            window.location.reload();
         }).catch(setMessage)
     })
 

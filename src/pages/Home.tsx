@@ -1,4 +1,3 @@
-import { Grid } from "@mantine/core"
 import { Carousel } from '@mantine/carousel';
 import MovieBox from "../components/MovieBox"
 import { useEffect, useState } from "react";
@@ -11,7 +10,6 @@ function Home() {
     const [movieRecommend, setMovieRecommend] = useState<Movie[]>([]);
 
     const user = useUserStore(state => state.user);
-    const colSpan = 2;
 
     useEffect(() => {
         getPopularMovie().then((data) => {
@@ -36,23 +34,23 @@ function Home() {
             </div>
             {movieRecommend.length ? <div className="mt-2">
                 <h1 className="text-left font-bold text-2xl mb-2">Based on your recent movies</h1>
-                <Grid>
+                <div className='grid grid-cols-4 gap-7'>
                     {movieRecommend.map((movie, index) => (
-                        <Grid.Col key={index} span={{base: colSpan}}>
+                        <div key={index}>
                             <MovieBox movie={movie}></MovieBox>
-                        </Grid.Col>    
+                        </div>    
                     ))}
-                </Grid>    
+                </div>    
             </div> : <></>}
             <div className="mt-2">
                 <h1 className="text-left font-bold text-2xl mb-2">Popular</h1>
-                <Grid>
+                <div className='grid grid-cols-4 gap-7'>
                     {movies.map((movie, index) => (
-                        <Grid.Col key={index} span={{base: colSpan}}>
+                        <div key={index}>
                             <MovieBox movie={movie}></MovieBox>
-                        </Grid.Col>    
+                        </div>    
                     ))}
-                </Grid>    
+                </div>    
             </div>
         </div>
     )
