@@ -105,6 +105,20 @@ function MovieForm(props: Props) {
                     key={form.key('img')}
                     {...form.getInputProps('img')}
                 />
+                <TextInput
+                    className="col-span-1"
+                    label="Trailer URL"
+                    placeholder="Trailer URL"
+                    key={form.key('trailer')}
+                    {...form.getInputProps('trailer')}
+                />
+                <TextInput
+                    className="col-span-2"
+                    label="Banner Image"
+                    placeholder="Banner Image"
+                    key={form.key('bannerImage')}
+                    {...form.getInputProps('bannerImage')}
+                />
                 <Textarea
                     className="col-span-3"
                     label="Description"

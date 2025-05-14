@@ -1,6 +1,6 @@
 import { Radio } from "@mantine/core";
-import { Item, ItemDetail } from "../types/Item";
-import { SeatDetail } from "../types/SeatMap";
+import { Item, ItemDetail } from "../../types/Item";
+import { SeatDetail } from "../../types/SeatMap";
 
 interface Props {
     seats: SeatDetail[],

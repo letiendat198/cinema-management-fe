@@ -7,7 +7,7 @@ import { Cinema, isCinema } from "../types/Cinema";
 import { isRoom } from "../types/Room";
 import { Button, Modal, Stepper } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import TicketPurchase from "./TicketPurchase";
+import TicketPurchase from "./ticket-purchase/TicketPurchase";
 import { Movie } from "../types/Movie";
 
 interface Props {
@@ -52,8 +52,15 @@ function MovieSchedule(props: Props) {
     }, [selectedDate, scheduleData])
 
     return (
-        <div className="grid grid-cols-3">
-            <div className="col-span-2">
+        <div className="flex gap-10 border-2 border-gray-200 p-4 rounded-md">
+            <div>
+                <Calendar
+                    getDayProps={(date) => ({
+                        selected: dayjs(date).isSame(selectedDate, 'date'), // For all dates in calendar, use this callback to determine if it's selected
+                        onClick: () => setSelectedDate(date),
+                    })} />
+            </div>
+            <div>
                 {mappedScheduleData.size > 0 ? Array.from(mappedScheduleData.keys()).map((cinemaName, index) => {
                     let schedules = mappedScheduleData.get(cinemaName);
                     return (
@@ -67,13 +74,6 @@ function MovieSchedule(props: Props) {
                         </div>
                     )
                 }) : <p className="text-lg">No schedule found for this date</p>}
-            </div>
-            <div>
-                <Calendar
-                    getDayProps={(date) => ({
-                        selected: dayjs(date).isSame(selectedDate, 'date'), // For all dates in calendar, use this callback to determine if it's selected
-                        onClick: () => setSelectedDate(date),
-                    })} />
             </div>
             <Modal size='auto' opened={ticketOpened} onClose={ticketClose} title={modalTitle.current}>
                 {selectedSchedule ? <TicketPurchase schedule={selectedSchedule} onClose={ticketClose} /> : <></>}

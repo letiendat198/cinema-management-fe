@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Item } from "../types/Item";
-import { getAllItems } from "../api/ItemAPI";
+import { Item } from "../../types/Item";
+import { getAllItems } from "../../api/ItemAPI";
 import { ActionIcon, NumberInput, TextInput } from "@mantine/core";
 import { IconMinus, IconPlus } from "@tabler/icons-react";
 

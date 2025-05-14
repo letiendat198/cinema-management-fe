@@ -1,17 +1,17 @@
 import { Button, Stepper } from "@mantine/core";
 import { useRef, useState } from "react";
 import TicketSelect from "./TicketSelect";
-import { Schedule } from "../types/Schedule";
-import { Movie } from "../types/Movie";
-import { useRestrictUser } from "../hooks/restrictUser";
+import { Schedule } from "../../types/Schedule";
+import { Movie } from "../../types/Movie";
+import { useRestrictUser } from "../../hooks/restrictUser";
 import ItemSelect from "./ItemSelect";
-import { Item, ItemDetail } from "../types/Item";
+import { Item, ItemDetail } from "../../types/Item";
 import ConfirmTicket from "./ConfirmTicket";
-import { SeatDetail } from "../types/SeatMap";
-import { addOrder } from "../api/OrderAPI";
-import { useUserStore } from "../hooks/userStore";
+import { SeatDetail } from "../../types/SeatMap";
+import { addOrder } from "../../api/OrderAPI";
+import { useUserStore } from "../../hooks/userStore";
 import { notifications } from "@mantine/notifications";
-import { getPaymentUrlForOrder } from "../api/PaymentAPI";
+import { getPaymentUrlForOrder } from "../../api/PaymentAPI";
 
 interface Props {
     schedule: Schedule,

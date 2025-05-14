@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
-import { Schedule } from "../types/Schedule";
-import { isRoom, Room } from "../types/Room";
-import { getRoomById } from "../api/RoomAPI";
-import { SeatDetail, SeatMap } from "../types/SeatMap";
-import { SeatType } from "../types/SeatType";
-import { getAllSeatTypes } from "../api/SeatTypeAPI";
-import { getSeatMapByRoomId } from "../api/SeatMapAPI";
-import SeatSelector from "./SeatSelector";
-import { getTicketByScheduleId } from "../api/TicketAPI";
+import { Schedule } from "../../types/Schedule";
+import { isRoom, Room } from "../../types/Room";
+import { getRoomById } from "../../api/RoomAPI";
+import { SeatDetail, SeatMap } from "../../types/SeatMap";
+import { SeatType } from "../../types/SeatType";
+import { getAllSeatTypes } from "../../api/SeatTypeAPI";
+import { getSeatMapByRoomId } from "../../api/SeatMapAPI";
+import SeatSelector from "../SeatSelector";
+import { getTicketByScheduleId } from "../../api/TicketAPI";
 
 
 interface Props {

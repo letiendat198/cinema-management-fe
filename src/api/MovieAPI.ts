@@ -13,8 +13,20 @@ const getRecommendedMovie = async (userId: string) => {
     return data;
 }
 
+const getPopularMovie = async () => {
+    let res = await apiClient.get(`/movie/popular/`);
+    let data: Movie[] = res.data?.data;
+    return data;
+}
+
 const getMovieById = async (id: string | undefined) => {
     let res = await apiClient.get(`/movie/${id}`);
+    let data: Movie = res.data?.data;
+    return data;
+}
+
+const incrementMovieLike = async (id: string | undefined) => {
+    let res = await apiClient.put(`/movie/${id}/likes`);
     let data: Movie = res.data?.data;
     return data;
 }
@@ -64,4 +76,4 @@ const deleteMovie = async (id: string) => {
     }
 }
 
-export {getAllMovies, getRecommendedMovie, getMovieById, addMovie, updateMovie, deleteMovie}
+export {getAllMovies, getRecommendedMovie, getPopularMovie, incrementMovieLike, getMovieById, addMovie, updateMovie, deleteMovie}

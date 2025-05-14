@@ -12,4 +12,6 @@ export interface Movie {
     length: number,
     director: string,
     moviestars: [string],
+    bannerImage: string,
+    trailer: string
 }
