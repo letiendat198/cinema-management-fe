@@ -46,12 +46,13 @@ function Header() {
                 <Link className='flex gap-2 hover:text-primary' to='/my-ticket'><IconTicket /> My ticket</Link>
                 <div className='flex gap-2 hover:text-primary'>
                     <IconUser />
+                    {!user ? <button className='hover:text-primary hover:cursor-pointer' onClick={() => {
+                        setForce(false);
+                        loginOpen();
+                    }}>Login / Register</button> :   
                     <Menu shadow='md' width={200} trigger='hover' position='bottom-start'>
                         <Menu.Target>
-                            {user ?  <p>{user.username}</p> : <button className='hover:text-primary hover:cursor-pointer' onClick={() => {
-                                setForce(false);
-                                loginOpen();
-                            }}>Login / Register</button>}   
+                             <p>{user.username}</p>
                         </Menu.Target>    
                         <Menu.Dropdown>
                             <Menu.Item>
@@ -64,7 +65,7 @@ function Header() {
                                 }} className='flex'>Log out</p>
                             </Menu.Item>
                         </Menu.Dropdown>
-                    </Menu>
+                    </Menu>}
                 </div>  
                 <Login />
             </div>
