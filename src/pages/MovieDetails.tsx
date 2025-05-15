@@ -4,7 +4,7 @@ import { useParams } from "react-router";
 import { Movie } from "../types/Movie";
 import { getMovieById, incrementMovieLike } from "../api/MovieAPI";
 import MovieSchedule from "../components/MovieSchedule";
-import { IconHeart, IconPlayerPlay } from "@tabler/icons-react";
+import { IconHeart, IconHeartFilled, IconPlayerPlay } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import ReactPlayer from 'react-player/youtube'
 import dayjs from "dayjs";
@@ -12,10 +12,15 @@ import dayjs from "dayjs";
 function MovieDetails() {
     const params = useParams();
     const [movie, setMovie] = useState<Movie>();
+    const [like, setLike] = useState<number>(0);
+    const [liked, setLiked] = useState<boolean>(false);
     const [trailerOpened, {open: trailerOpen, close: trailerClose}] = useDisclosure(false);
 
     useEffect(() => {
-        getMovieById(params.movieId).then((data) => setMovie(data))
+        getMovieById(params.movieId).then((data) => {
+            setMovie(data);
+            setLike(data.like);
+        })
     }, [])
 
     return (
@@ -36,10 +41,16 @@ function MovieDetails() {
                     <div className="flex gap-4 items-center">
                         <p className="text-3xl font-bold mb-2">{movie?.title}</p>
                         <div className="flex items-center">
-                            <ActionIcon variant="transparent" onClick={() => incrementMovieLike(movie?._id)}>
-                                <IconHeart />
+                            <ActionIcon className="hover:-translate-y-0.5" variant="transparent" color={liked ? "red" : "blue"}  onClick={() => {
+                                if (!liked) {
+                                    incrementMovieLike(movie?._id);    
+                                    setLike(old => old+1);
+                                } 
+                                setLiked(true);
+                            }}>
+                                {liked ? <IconHeartFilled /> : <IconHeart />}
                             </ActionIcon>
-                            <p>{movie?.like}</p>      
+                            <p>{like}</p>      
                         </div>
                     </div>
                     <p className="flex-1 text-lg"><span className="font-semibold">Premier date:</span> {dayjs(movie?.releaseDate).format("DD/MM/YYYY")}</p>

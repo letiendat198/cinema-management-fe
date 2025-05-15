@@ -12,7 +12,7 @@ function MovieBox(props: Props) {
         <Link to={`/movie/${props.movie._id}`}>
             <div className="flex flex-col">
                 <img className="object-cover aspect-2/3 rounded-sm hover:shadow-primary-300 hover:shadow-md hover:opacity-80" src={props.movie.img}/>
-                <div className="flex justify-between">
+                <div className="flex items-center gap-2 justify-between">
                     <p className="text-xl text-left font-sans font-semibold truncate hover:text-primary">{props.movie.title}</p>
                     <p className="font-light">{dayjs(props.movie.releaseDate).format("DD/MM/YYYY")}</p>
                 </div>  
