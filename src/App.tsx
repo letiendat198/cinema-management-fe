@@ -12,6 +12,7 @@ import UserTicket from './pages/UserTicket.tsx';
 import DefaultLayout from "./layout/DefaultLayout.tsx";
 import Statistic from "./pages/Statistic.tsx";
 import ListMovie from "./pages/ListMovie.tsx";
+import ListCinema from "./pages/ListCinema.tsx";
 
 // import './debugCSS.css'
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="/" element={<DefaultLayout />}>
             <Route index element={<Home />} />
             <Route path="/movies" element={<ListMovie />} />
+            <Route path="/cinemas" element={<ListCinema />} />
             <Route path="/movie/:movieId" element={<MovieDetails/>} />
             <Route path='/my-ticket' element={<UserTicket/>} />
             <Route path='/profile' element={<UserProfile />} />
