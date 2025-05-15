@@ -78,19 +78,24 @@ function TicketSelect(props: Props) {
 
         getRoomById(roomId).then(data => setRoomData(data));
 
-        getSeatsByRoomId(roomId).then(data => {
-            setSeatData(data);
-            setRefSeatData(data);
-        });
-    }, [])
+        getAllSeatTypes().then(seatTypeData => {
+            setSeatTypeData(seatTypeData)
+            selectingType.current = seatTypeData.find(e => e.label == "Selecting");
+            let soldSeatType = seatTypeData.find(e => e.label == "Sold");
 
-    // Get seat types
-    useEffect(() => {
-        getAllSeatTypes().then(data => {
-            setSeatTypeData(data)
-            selectingType.current = data.find(e => e.label == "Selecting");
-        });
-    }, [])
+            getSeatsByRoomId(roomId).then(data => {
+                // Get booked seats
+                getTicketByScheduleId(props.schedule._id).then(ticketData => {
+                    for (let ticket of ticketData) {
+                        data[ticket.seat.seatNumber].seatType =  soldSeatType ? soldSeatType : ""
+                    }
+
+                    setSeatData(data);
+                    setRefSeatData(data);
+                });
+            });
+        })
+    }, []);
 
     return (
         <div className="flex gap-10">
