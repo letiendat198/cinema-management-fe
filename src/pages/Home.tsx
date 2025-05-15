@@ -13,9 +13,9 @@ function Home() {
 
     useEffect(() => {
         getPopularMovie().then((data) => {
-            setMovies(data);
+            setMovies(data.filter(e => e.unlisted == false));
         });
-        if (user) getRecommendedMovie(user._id).then(data => setMovieRecommend(data));
+        if (user) getRecommendedMovie(user._id).then(data => setMovieRecommend(data.filter(e => e.unlisted == false)));
     }, []);
 
     return (
@@ -33,8 +33,8 @@ function Home() {
                 </Carousel>    
             </div>
             {movieRecommend.length ? <div className="mt-2">
-                <h1 className="text-left font-bold text-3xl mb-2">Based on your recent movies</h1>
-                <div className='grid grid-cols-4 gap-7'>
+                <p className="text-left font-bold text-3xl mb-2">Based on your recent movies</p>
+                <div className='grid grid-cols-4 gap-10'>
                     {movieRecommend.map((movie, index) => (
                         <div key={index}>
                             <MovieBox movie={movie}></MovieBox>
@@ -43,8 +43,8 @@ function Home() {
                 </div>    
             </div> : <></>}
             <div className="mt-2">
-                <h1 className="text-left font-bold text-3xl mb-2">Popular</h1>
-                <div className='grid grid-cols-4 gap-7'>
+                <p className="text-left font-bold text-3xl mb-2">Popular</p>
+                <div className='grid grid-cols-4 gap-10'>
                     {movies.map((movie, index) => (
                         <div key={index}>
                             <MovieBox movie={movie}></MovieBox>

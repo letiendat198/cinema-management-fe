@@ -13,5 +13,7 @@ export interface Movie {
     director: string,
     moviestars: [string],
     bannerImage: string,
+    releaseDate: Date,
     trailer: string
+    unlisted: boolean
 }

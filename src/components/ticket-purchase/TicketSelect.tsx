@@ -20,6 +20,7 @@ interface Props {
 function TicketSelect(props: Props) {
     const [roomData, setRoomData] = useState<Room>(); // For max row and column
     const [seatData, setSeatData] = useState<Seat[]>([]); // Seat map
+    const [refSeatData, setRefSeatData] = useState<Seat[]>([]); // Ref seat map for original seat type
     const [seatTypeData, setSeatTypeData] = useState<SeatType[]>();
 
     const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
@@ -28,29 +29,37 @@ function TicketSelect(props: Props) {
     const selectingType = useRef<SeatType>(undefined);
 
     const onCellSelect = (index: number, value: number, isSelected: boolean) => {
-        setSeatData(seatData.map((e,i) => {
+        const updatedSeatData = seatData.map((e,i) => {
             if (i == index) {
-                let selectedSeat = e;
+                let selectedSeat = {...e}; // COPY THE OBJECT OTHERWISE IT WILL CHANGE BOTH SEATDATA AND REFSEATDATA
+                
                 if (!selectingType.current) return e;
                 if (!isSeatType(selectedSeat.seatType)) return e;
                 selectedSeat.seatType = selectingType.current;
-                return isSelected ? selectedSeat : e;
+
+                if (isSelected) return selectedSeat;
+                else {
+                    selectedSeat.seatType = refSeatData[index].seatType;
+                    return selectedSeat;
+                }
             }
             return e;
-        })); // Change color
+        })
+        setSeatData(updatedSeatData); // Change color
 
         // Get the price of selected seats
-        let seatPrice = seatTypeData?.find(e => e.value == value)?.price
+        if (!isSeatType(refSeatData[index].seatType)) return;
+        let seatPrice = refSeatData[index].seatType.price;
         seatPrice = seatPrice ? seatPrice : 0;
 
         // Add or subtract total price and update seats. State update should be batched and only cause 1 re-render
         if (isSelected) {
-            setSelectedSeats([...selectedSeats, seatData[index]]);    
+            setSelectedSeats([...selectedSeats, refSeatData[index]]);    
             setTotalPrice(price => price + seatPrice);
             // totalPriceRef.current += seatPrice;
         }
         else {
-            setSelectedSeats([...selectedSeats].filter((e, i) => i != index));
+            setSelectedSeats([...selectedSeats].filter((e, i) => e.seatNumber != index));
             setTotalPrice(price => price - seatPrice);
             // totalPriceRef.current -= seatPrice;
         } 
@@ -69,7 +78,10 @@ function TicketSelect(props: Props) {
 
         getRoomById(roomId).then(data => setRoomData(data));
 
-        getSeatsByRoomId(roomId).then(data => setSeatData(data));
+        getSeatsByRoomId(roomId).then(data => {
+            setSeatData(data);
+            setRefSeatData(data);
+        });
     }, [])
 
     // Get seat types

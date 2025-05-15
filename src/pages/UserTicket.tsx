@@ -33,7 +33,7 @@ function UserTicket() {
                         {orders.map(order => {
                             if (order.status == 'pending') return;
                             return (
-                                <div className="col-span-1">
+                                <div key={order._id} className="col-span-1">
                                     <OrderBox order={order} />    
                                 </div>
                             )
@@ -46,7 +46,7 @@ function UserTicket() {
                         {orders.map(order => {
                             if (order.status != 'pending') return;
                             return (
-                                <div className="col-span-1">
+                                <div key={order._id} className="col-span-1">
                                     <OrderBox order={order} />    
                                 </div>
                             )

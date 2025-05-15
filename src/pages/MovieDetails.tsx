@@ -7,6 +7,7 @@ import MovieSchedule from "../components/MovieSchedule";
 import { IconHeart, IconPlayerPlay } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import ReactPlayer from 'react-player/youtube'
+import dayjs from "dayjs";
 
 function MovieDetails() {
     const params = useParams();
@@ -41,10 +42,11 @@ function MovieDetails() {
                             <p>{movie?.like}</p>      
                         </div>
                     </div>
+                    <p className="flex-1 text-lg"><span className="font-semibold">Premier date:</span> {dayjs(movie?.releaseDate).format("DD/MM/YYYY")}</p>
                     <p className="flex-1 text-lg"><span className="font-semibold">Director:</span> {movie?.director}</p>
                     <p className="flex-1 text-lg"><span className="font-semibold">Stars:</span> {movie?.moviestars.join(", ")}</p>
                     <p className="flex-1 text-lg"><span className="font-semibold">Genre:</span> {movie?.genre}</p>
-                    <p className="flex-1 text-lg"><span className="font-semibold">Premiere Date:</span> {movie?.year}</p>
+                    <p className="flex-1 text-lg"><span className="font-semibold">Year:</span> {movie?.year}</p>
                     <p className="flex-1 text-lg"><span className="font-semibold">Length:</span> {movie?.length}</p>
                     <p className="flex-1 text-lg"><span className="font-semibold">Language:</span> {movie?.language.join(", ")}</p>
                     <p className="flex-1 text-lg"><span className="font-semibold">Rated:</span> {movie?.rating}</p>    

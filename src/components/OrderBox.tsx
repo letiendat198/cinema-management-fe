@@ -23,7 +23,7 @@ function OrderBox({ order }: Props) {
                 <div className="flex flex-col gap-2">
                     <p className="text-2xl font-semibold">{order.showtime.movieID.title}</p>
                     <p><span className="font-semibold">Location: </span>{isCinema(order.showtime.roomID.cinemaID) ? order.showtime.roomID.cinemaID.name + " - " + order.showtime.roomID.cinemaID.location : ""}</p>
-                    <p><span className="font-semibold">Room: </span>{order.showtime.roomID.roomNumber} - <span className="font-semibold">Seat: </span> {order._tempSeats.length ? order._tempSeats.map(e => e.label).join(", ") : order.tickets.map(ticket => ticket.seat.label)}</p>   
+                    <p><span className="font-semibold">Room: </span>{order.showtime.roomID.roomNumber} - <span className="font-semibold">Seat: </span> {order._tempSeats.length ? order._tempSeats.map(e => e.label).join(", ") : order.tickets.map(ticket => ticket.seat.label).join(", ")}</p>   
                     <p><span className="font-semibold">Time: </span>{dayjs(order.showtime.startTime).format('HH:mm')} - {dayjs(order.showtime.endTime).format('HH:mm')}</p> 
                     <p><span className="font-semibold">Additional:</span> {order.complementItems.map(e => e.item.name + " x " + e.quantity).join(", ")}</p>
                     <p><span className="font-semibold">Price:</span> {order.totalPrice.toLocaleString('vi-VI', {style: 'currency', currency: 'VND'})}</p>

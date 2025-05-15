@@ -1,6 +1,7 @@
 import { Button } from "@mantine/core";
 import { Link } from "react-router";
 import { Movie } from "../types/Movie";
+import dayjs from "dayjs";
 
 interface Props {
     movie: Movie
@@ -13,7 +14,7 @@ function MovieBox(props: Props) {
                 <img className="object-cover aspect-2/3 rounded-sm hover:shadow-primary-300 hover:shadow-md hover:opacity-80" src={props.movie.img}/>
                 <div className="flex justify-between">
                     <p className="text-xl text-left font-sans font-semibold truncate hover:text-primary">{props.movie.title}</p>
-                    {/* <p className="line-clamp-2 md:line-clamp-5">{props.description}</p>     */}
+                    <p className="font-light">{dayjs(props.movie.releaseDate).format("DD/MM/YYYY")}</p>
                 </div>  
             </div>      
         </Link>

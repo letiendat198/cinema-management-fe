@@ -84,7 +84,12 @@ function ManageMovie() {
     ]
 
     useEffect(() => {
-        getAllMovies().then(data => setData(data));
+        getAllMovies().then(data => {
+            setData(data.map(e => {
+                e.releaseDate = new Date(e.releaseDate)
+                return e;
+            }))
+        });
     }, [refresh]) 
 
     return (

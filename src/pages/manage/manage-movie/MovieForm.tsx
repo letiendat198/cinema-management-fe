@@ -1,8 +1,9 @@
-import { Button, Textarea, TextInput } from "@mantine/core";
+import { Button, Checkbox, Textarea, TextInput } from "@mantine/core";
 import { Movie } from "../../../types/Movie";
 import { useForm } from "@mantine/form";
 import {notifications} from '@mantine/notifications';
 import { addMovie, updateMovie } from "../../../api/MovieAPI";
+import { DatePickerInput } from "@mantine/dates";
 
 interface Props {
     edit?: boolean,
@@ -13,7 +14,7 @@ interface Props {
 function MovieForm(props: Props) {
     const form = useForm({
         mode: 'uncontrolled',
-        initialValues: props.data,
+        initialValues: props.data
         // validate: {
         //     username: (value) => !value ? "Cannot be empty!" : null,
         //     email:  (value) => !value ? "Cannot be empty!" : null,
@@ -49,6 +50,13 @@ function MovieForm(props: Props) {
     return (
         <form className="flex flex-col gap-2" onSubmit={submitCallback}>
             <div className="grid grid-cols-3 gap-4">
+                <Checkbox 
+                    className="col-span-3"
+                    label="Unlisted"
+                    placeholder="Unlisted"
+                    key={form.key('unlisted')}
+                    {...form.getInputProps('unlisted', { type: 'checkbox' })}
+                />
                 <TextInput
                     withAsterisk
                     label="Title"
@@ -105,12 +113,12 @@ function MovieForm(props: Props) {
                     key={form.key('img')}
                     {...form.getInputProps('img')}
                 />
-                <TextInput
+                <DatePickerInput
                     className="col-span-1"
-                    label="Trailer URL"
-                    placeholder="Trailer URL"
-                    key={form.key('trailer')}
-                    {...form.getInputProps('trailer')}
+                    label="Release date"
+                    placeholder="Release date"
+                    key={form.key('releaseDate')}
+                    {...form.getInputProps('releaseDate')}
                 />
                 <TextInput
                     className="col-span-2"
@@ -118,6 +126,13 @@ function MovieForm(props: Props) {
                     placeholder="Banner Image"
                     key={form.key('bannerImage')}
                     {...form.getInputProps('bannerImage')}
+                />
+                <TextInput
+                    className="col-span-3"
+                    label="Trailer URL"
+                    placeholder="Trailer URL"
+                    key={form.key('trailer')}
+                    {...form.getInputProps('trailer')}
                 />
                 <Textarea
                     className="col-span-3"
