@@ -27,7 +27,7 @@ function ListCinema() {
                 <div className="flex flex-col gap-2">
                     <p><span className="font-semibold">Address: </span>{selectedCinemaAddr}</p>
                     <div className="w-1/2">
-                        <iframe width="100%" height="400" src={`https://maps.google.com/maps?width=100%25&height=600&hl=en&q=${selectedCinemaAddr ? encodeURI(selectedCinemaAddr) : ""}+()&t=&z=14&ie=UTF8&iwloc=B&output=embed`}></iframe></div>
+                        <iframe width="100%" height="400" src={`https://maps.google.com/maps?width=100%25&height=600&hl=en&q=${selectedCinemaAddr ? encodeURI(selectedCinemaAddr) : ""}+()&t=&z=17&ie=UTF8&iwloc=B&output=embed`}></iframe></div>
                 </div>
         </div>
     );
