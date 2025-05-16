@@ -60,7 +60,7 @@ function MovieDetails() {
                     <p className="flex-1 text-lg"><span className="font-semibold">Year:</span> {movie?.year}</p>
                     <p className="flex-1 text-lg"><span className="font-semibold">Length:</span> {movie?.length}</p>
                     <p className="flex-1 text-lg"><span className="font-semibold">Language:</span> {movie?.language.join(", ")}</p>
-                    <p className="flex-1 text-lg"><span className="font-semibold">Rated:</span> {movie?.rating}</p>    
+                    <p className="flex-1 text-lg"><span className="font-semibold">Rated:</span> {movie?.ageRating}</p>    
                 </div>
             </div>
             <div>

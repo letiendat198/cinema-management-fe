@@ -10,7 +10,6 @@ import UserProfile from './pages/UserProfile.tsx';
 import VerifyPayment from './pages/VerifyPayment.tsx';
 import UserTicket from './pages/UserTicket.tsx';
 import DefaultLayout from "./layout/DefaultLayout.tsx";
-import Statistic from "./pages/Statistic.tsx";
 import ListMovie from "./pages/ListMovie.tsx";
 import ListCinema from "./pages/ListCinema.tsx";
 
