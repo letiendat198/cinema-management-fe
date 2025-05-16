@@ -7,6 +7,7 @@ import { Cinema } from "../../../types/Cinema";
 import { getAllCinemas } from "../../../api/CinemaAPI";
 import { useToggle } from "@mantine/hooks";
 import { useRestrictUser } from "../../../hooks/restrictUser";
+import ManageSeatType from "./ManageSeatType";
 
 function ManageCinemaGeneral() {
     useRestrictUser('admin');
@@ -29,7 +30,10 @@ function ManageCinemaGeneral() {
                     </Tabs.Tab>
                     <Tabs.Tab value="seat">
                         Manage Seat
-                    </Tabs.Tab>    
+                    </Tabs.Tab>   
+                    <Tabs.Tab value="seattype">
+                        Manage Seat Type
+                    </Tabs.Tab>  
                 </Tabs.List>
                 <Tabs.Panel value="cinema">
                     <ManageCinema data={cinemaData} refreshToggle={refreshToggle} />
@@ -39,6 +43,9 @@ function ManageCinemaGeneral() {
                 </Tabs.Panel>
                 <Tabs.Panel value="seat">
                     <ManageSeat cinemaData={cinemaData} />
+                </Tabs.Panel>
+                <Tabs.Panel value="seattype">
+                    <ManageSeatType />
                 </Tabs.Panel>
             </Tabs>
         </div>
